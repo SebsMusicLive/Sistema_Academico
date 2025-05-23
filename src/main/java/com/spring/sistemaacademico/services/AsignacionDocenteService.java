@@ -1,7 +1,7 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.AsignacionDocente;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.AsignacionDocente;
 
 import java.util.Date;
 import java.util.List;

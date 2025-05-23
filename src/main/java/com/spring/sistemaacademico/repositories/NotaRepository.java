@@ -1,8 +1,8 @@
 package com.spring.sistemaacademico.repositories;
 
+import com.spring.sistemaacademico.model.Nota;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sistemaAcademico.model.Nota;
 
 import java.util.List;
 

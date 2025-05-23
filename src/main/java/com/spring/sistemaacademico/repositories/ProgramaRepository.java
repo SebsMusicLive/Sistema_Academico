@@ -1,8 +1,8 @@
 package com.spring.sistemaacademico.repositories;
 
+import com.spring.sistemaacademico.model.Programa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sistemaAcademico.model.Programa;
 
 import java.util.List;
 

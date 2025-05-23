@@ -1,7 +1,7 @@
 package com.spring.sistemaacademico.repositories;
 
+import com.spring.sistemaacademico.model.ReservaEspacio;
 import org.springframework.data.jpa.repository.JpaRepository;
-import sistemaAcademico.model.ReservaEspacio;
 
 import java.util.List;
 
