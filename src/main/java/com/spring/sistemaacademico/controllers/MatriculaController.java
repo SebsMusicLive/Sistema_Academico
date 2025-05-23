@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Matricula;
+import com.spring.sistemaacademico.services.MatriculaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Matricula;
-import sistemaAcademico.service.MatriculaService;
 
 import java.util.List;
 import java.util.Optional;

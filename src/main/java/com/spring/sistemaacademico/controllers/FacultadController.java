@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Facultad;
+import com.spring.sistemaacademico.services.FacultadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Facultad;
-import sistemaAcademico.service.FacultadService;
 
 import java.util.List;
 import java.util.Optional;

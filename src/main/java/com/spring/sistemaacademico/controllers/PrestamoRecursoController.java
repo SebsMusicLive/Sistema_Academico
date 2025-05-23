@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.PrestamoRecurso;
+import com.spring.sistemaacademico.services.PrestamoRecursoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.PrestamoRecurso;
-import sistemaAcademico.service.PrestamoRecursoService;
 
 import java.util.Date;
 import java.util.List;

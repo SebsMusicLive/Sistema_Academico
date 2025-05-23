@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Foro;
+import com.spring.sistemaacademico.services.ForoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Foro;
-import sistemaAcademico.service.ForoService;
 
 import java.util.Date;
 import java.util.List;

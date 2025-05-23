@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.services.SemestreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.service.SemestreService;
 
 import java.util.List;
 import java.util.Optional;

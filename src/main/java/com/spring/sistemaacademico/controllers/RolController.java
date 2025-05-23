@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Rol;
+import com.spring.sistemaacademico.services.RolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Rol;
-import sistemaAcademico.service.RolService;
 
 import java.util.List;
 import java.util.Optional;

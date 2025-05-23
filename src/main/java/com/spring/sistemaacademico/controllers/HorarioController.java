@@ -1,11 +1,11 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Curso;
+import com.spring.sistemaacademico.model.Horario;
+import com.spring.sistemaacademico.services.HorarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Curso;
-import sistemaAcademico.model.Horario;
-import sistemaAcademico.service.HorarioService;
 
 import java.util.Date;
 import java.util.List;

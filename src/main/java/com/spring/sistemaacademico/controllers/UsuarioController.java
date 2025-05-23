@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Usuario;
+import com.spring.sistemaacademico.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Usuario;
-import sistemaAcademico.service.UsuarioService;
 
 import java.util.List;
 import java.util.Optional;

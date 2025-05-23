@@ -1,12 +1,12 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Chat;
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.services.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Chat;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.service.ChatService;
 
 import java.util.Date;
 import java.util.List;

@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.RecursoAcademico;
+import com.spring.sistemaacademico.services.RecursoAcademicoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.RecursoAcademico;
-import sistemaAcademico.service.RecursoAcademicoService;
 
 import java.util.List;
 import java.util.Optional;

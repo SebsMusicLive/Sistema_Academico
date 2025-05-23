@@ -1,12 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.AsignacionDocente;
+import com.spring.sistemaacademico.repositories.AsignacionDocenteRepository;
 import lombok.RequiredArgsConstructor;
 import org.jvnet.hk2.annotations.Service;
-import sistemaAcademico.model.AsignacionDocente;
-import sistemaAcademico.model.Curso;
-import sistemaAcademico.model.Docente;
-import sistemaAcademico.model.Horario;
-import sistemaAcademico.repository.AsignacionDocenteRepository;
 
 import java.util.Date;
 import java.util.List;

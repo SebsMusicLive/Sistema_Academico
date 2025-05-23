@@ -1,10 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.services.EstudianteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Estudiante;
-import sistemaAcademico.service.EstudianteService;
 
 import java.util.List;
 import java.util.Optional;

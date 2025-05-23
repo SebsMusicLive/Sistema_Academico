@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Espacio;
+import com.spring.sistemaacademico.services.EspacioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Espacio;
-import sistemaAcademico.service.EspacioService;
 
 import java.util.List;
 import java.util.Optional;

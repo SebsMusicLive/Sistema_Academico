@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.repositories;
 
+import com.spring.sistemaacademico.model.Curso;
+import com.spring.sistemaacademico.model.Horario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sistemaAcademico.model.Curso;
-import sistemaAcademico.model.Horario;
 
 import java.util.Date;
 import java.util.List;

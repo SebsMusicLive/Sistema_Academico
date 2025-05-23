@@ -1,8 +1,8 @@
 package com.spring.sistemaacademico.repositories;
 
+import com.spring.sistemaacademico.model.AsignacionDocente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sistemaAcademico.model.AsignacionDocente;
 
 import java.util.Date;
 import java.util.List;

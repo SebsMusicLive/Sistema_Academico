@@ -1,11 +1,11 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Notificacion;
+import com.spring.sistemaacademico.services.NotificacionEmailService;
+import com.spring.sistemaacademico.services.NotificacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Notificacion;
-import sistemaAcademico.service.NotificacionEmailService;
-import sistemaAcademico.service.NotificacionService;
 
 import java.time.LocalDateTime;
 import java.util.List;

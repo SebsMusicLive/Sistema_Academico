@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Mensaje;
+import com.spring.sistemaacademico.services.MensajeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Mensaje;
-import sistemaAcademico.service.MensajeService;
 
 import java.util.List;
 import java.util.Optional;

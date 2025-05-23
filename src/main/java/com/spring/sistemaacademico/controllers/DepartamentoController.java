@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Departamento;
+import com.spring.sistemaacademico.services.DepartamentoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.Departamento;
-import sistemaAcademico.service.DepartamentoService;
 
 import java.util.List;
 import java.util.Optional;

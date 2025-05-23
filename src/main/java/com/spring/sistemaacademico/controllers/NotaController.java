@@ -1,6 +1,7 @@
 package com.spring.sistemaacademico.controllers;
 
 import com.spring.sistemaacademico.model.Nota;
+import com.spring.sistemaacademico.services.NotaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

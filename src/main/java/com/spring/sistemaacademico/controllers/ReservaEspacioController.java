@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.ReservaEspacio;
+import com.spring.sistemaacademico.services.ReservaEspacioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sistemaAcademico.model.ReservaEspacio;
-import sistemaAcademico.service.ReservaEspacioService;
 
 import java.time.LocalDateTime;
 import java.util.List;

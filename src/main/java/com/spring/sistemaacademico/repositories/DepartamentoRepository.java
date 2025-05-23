@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.repositories;
 
+import com.spring.sistemaacademico.model.Departamento;
+import com.spring.sistemaacademico.model.Facultad;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sistemaAcademico.model.Departamento;
-import sistemaAcademico.model.Facultad;
 
 import java.util.List;
 
