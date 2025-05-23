@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Chat;
+import com.spring.sistemaacademico.model.Usuario;
+import com.spring.sistemaacademico.repositories.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Chat;
-import sistemaAcademico.model.Usuario;
-import sistemaAcademico.repository.ChatRepository;
 
 import java.util.Date;
 import java.util.List;

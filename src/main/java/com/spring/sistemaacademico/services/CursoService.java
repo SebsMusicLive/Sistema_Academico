@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Curso;
+import com.spring.sistemaacademico.model.Estudiante;
+import com.spring.sistemaacademico.model.Horario;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Curso;
-import sistemaAcademico.model.Estudiante;
-import sistemaAcademico.model.Horario;
 
 import java.util.List;
 

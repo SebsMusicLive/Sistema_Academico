@@ -1,6 +1,7 @@
 package com.spring.sistemaacademico.services;
 
-import sistemaAcademico.model.Calificacion;
+
+import com.spring.sistemaacademico.model.Calificacion;
 
 import java.util.List;
 

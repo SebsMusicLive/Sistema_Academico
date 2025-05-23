@@ -1,7 +1,7 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Semestre;
 import org.springframework.data.repository.CrudRepository;
-import sistemaAcademico.model.Semestre;
 
 import java.util.List;
 

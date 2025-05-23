@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Evaluacion;
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.repositories.EvaluacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Evaluacion;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.EvaluacionRepository;
 
 import java.util.Date;
 import java.util.List;

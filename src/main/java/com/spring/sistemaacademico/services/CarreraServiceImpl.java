@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Carrera;
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.repositories.CarreraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Carrera;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.CarreraRepository;
 
 import java.util.List;
 

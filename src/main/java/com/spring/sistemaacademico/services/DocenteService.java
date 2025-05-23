@@ -1,7 +1,7 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Docente;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Docente;
 
 import java.util.List;
 

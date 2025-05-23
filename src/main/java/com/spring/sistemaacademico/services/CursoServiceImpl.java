@@ -1,11 +1,11 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.*;
+import com.spring.sistemaacademico.repositories.CursoHistorialRepository;
+import com.spring.sistemaacademico.repositories.CursoRepository;
+import com.spring.sistemaacademico.repositories.HorarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.*;
-import sistemaAcademico.repository.CursoHistorialRepository;
-import sistemaAcademico.repository.CursoRepository;
-import sistemaAcademico.repository.HorarioRepository;
 
 import java.util.*;
 

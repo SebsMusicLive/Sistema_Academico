@@ -1,7 +1,7 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Foro;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Foro;
 
 import java.util.Date;
 import java.util.List;

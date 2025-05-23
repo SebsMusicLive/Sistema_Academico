@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.*;
+import com.spring.sistemaacademico.repositories.CursoRepository;
+import com.spring.sistemaacademico.repositories.EstudianteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.*;
-import sistemaAcademico.repository.CursoRepository;
-import sistemaAcademico.repository.EstudianteRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

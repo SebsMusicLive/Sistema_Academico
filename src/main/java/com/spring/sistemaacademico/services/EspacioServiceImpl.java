@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Espacio;
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.repositories.EspacioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Espacio;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.EspacioRepository;
 
 import java.util.List;
 

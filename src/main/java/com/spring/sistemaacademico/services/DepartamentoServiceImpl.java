@@ -1,12 +1,12 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Departamento;
+import com.spring.sistemaacademico.model.Docente;
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.repositories.DepartamentoRepository;
+import com.spring.sistemaacademico.repositories.DocenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Departamento;
-import sistemaAcademico.model.Docente;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.DepartamentoRepository;
-import sistemaAcademico.repository.DocenteRepository;
 
 import java.util.List;
 import java.util.Optional;

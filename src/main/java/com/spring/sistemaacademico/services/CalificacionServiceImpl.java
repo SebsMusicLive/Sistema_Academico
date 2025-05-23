@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Calificacion;
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.repositories.CalificacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Calificacion;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.CalificacionRepository;
 
 import java.util.List;
 

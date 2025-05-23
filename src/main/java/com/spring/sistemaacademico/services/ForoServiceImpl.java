@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Foro;
+import com.spring.sistemaacademico.repositories.ForoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Foro;
-import sistemaAcademico.repository.ForoRepository;
 
 import java.util.Date;
 import java.util.List;

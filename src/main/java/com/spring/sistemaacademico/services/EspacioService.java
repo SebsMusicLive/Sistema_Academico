@@ -1,6 +1,7 @@
 package com.spring.sistemaacademico.services;
 
-import sistemaAcademico.model.Espacio;
+
+import com.spring.sistemaacademico.model.Espacio;
 
 public abstract class EspacioService implements CrudService<Espacio, Long> {
 
