@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class CalificacionServiceImpl implements CalificacionService {
     }
 
     @Override
-    public Semestre findById(Long id) throws Exception {
+    public Optional<Calificacion> findById(Long id) throws Exception {
         return repository.findById(id);
     }
 

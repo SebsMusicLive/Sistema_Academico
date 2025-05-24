@@ -1,19 +1,19 @@
 package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.Asistencia;
-import com.spring.sistemaacademico.model.Semestre;
 import com.spring.sistemaacademico.repositories.AsistenciaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AsistenciaServiceImpl implements AsistenciaService{
 
-    // Inyección de dependencias
+    // Inyección de dependencies
     private final AsistenciaRepository asistenciaRepository;
 
     @Override
@@ -21,10 +21,6 @@ public class AsistenciaServiceImpl implements AsistenciaService{
         return asistenciaRepository.findAll();
     }
 
-    @Override
-    public Semestre findById(Long id) {
-        return asistenciaRepository.findById(id);
-    }
 
     @Override
     public Asistencia save(Asistencia asistencia) {
@@ -56,4 +52,10 @@ public class AsistenciaServiceImpl implements AsistenciaService{
     public List<Asistencia> findByAsistencia(boolean asistencia) {
         return asistenciaRepository.findByAsistencia(asistencia);
     }
+
+    @Override
+    public Optional<Asistencia> findById(Long id) {
+        return asistenciaRepository.findById(id);
+    }
+
 }

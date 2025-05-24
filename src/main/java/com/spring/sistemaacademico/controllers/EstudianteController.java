@@ -1,5 +1,6 @@
 package com.spring.sistemaacademico.controllers;
 
+import com.spring.sistemaacademico.model.Estudiante;
 import com.spring.sistemaacademico.services.EstudianteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
