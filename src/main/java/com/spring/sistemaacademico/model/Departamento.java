@@ -19,8 +19,6 @@ public class Departamento {
 
     private String nombre;
 
-    // Una facultad tiene muchos departamentos
-    // La anotacion many to one indica que muchos departamentos pertenecen a una facultad
     @ManyToOne
     @JoinColumn(name = "codigo_facultad")
     private Facultad facultad;
@@ -29,7 +27,6 @@ public class Departamento {
     @JoinColumn(name = "codigo_departamento")
     private List<Docente> docentes;
 
-    // Agregamos relacion con carrera
     @OneToMany(mappedBy = "codigoDepartamento")
     private List<Carrera> carreras;
 }

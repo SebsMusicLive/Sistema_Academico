@@ -44,7 +44,7 @@ public class CursoHistorialController {
      */
     @PutMapping("/{codigoCursoHistorial}")
     public CursoHistorial updateCursoHistorial(@PathVariable Long codigoCursoHistorial, @RequestBody CursoHistorial cursoHistorial) throws Exception {
-        cursoHistorial.setCodigoCursoHistorial(codigoCursoHistorial);
+        cursoHistorial.setId(codigoCursoHistorial); // ← CORREGIDO
         return cursoHistorialService.update(cursoHistorial);
     }
 
@@ -67,10 +67,8 @@ public class CursoHistorialController {
     /*
      * Métodos de búsqueda adicionales (si decides implementarlos luego)
      */
-
     @GetMapping("/buscar/calificacion")
     public List<CursoHistorial> getByCalificacionFinal(@RequestParam float calificacionFinal) throws Exception {
         return cursoHistorialService.findByCalificacionFinal(calificacionFinal);
     }
-
 }

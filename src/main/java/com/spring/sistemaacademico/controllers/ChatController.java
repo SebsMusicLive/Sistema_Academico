@@ -1,13 +1,13 @@
 package com.spring.sistemaacademico.controllers;
 
+
+
 import com.spring.sistemaacademico.model.Chat;
-import com.spring.sistemaacademico.model.Semestre;
 import com.spring.sistemaacademico.services.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.spring.sistemaacademico.model.Chat;
 
 
 import java.util.Date;
@@ -20,82 +20,63 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    // ========================== CRUD BÁSICO ==========================
-
-    /**
-     * Obtener todos los chats
-     */
+    // Obtener todos los chats
     @GetMapping
-    public List<Chat> getAllChats() throws Exception {
-        return chatService.findAll();
+    public ResponseEntity<List<Chat>> getAllChats() throws Exception {
+        return ResponseEntity.ok(chatService.findAll());
     }
 
-    /**
-     * Obtener un chat por su ID
-     */
+    // Obtener un chat por ID
     @GetMapping("/{codigoChat}")
-    public Semestre getChatById(@PathVariable Long codigoChat) throws Exception {
-        return chatService.findById(codigoChat);
+    public ResponseEntity<Chat> getChatById(@PathVariable Long codigoChat) throws Exception {
+        return chatService.findById(codigoChat)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /**
-     * Crear un nuevo chat (normal)
-     */
+    // Crear un nuevo chat
     @PostMapping
-    public Chat createChat(@RequestBody Chat chat) throws Exception {
-        return chatService.save(chat);
+    public ResponseEntity<Chat> createChat(@RequestBody Chat chat) throws Exception {
+        return ResponseEntity.status(201).body(chatService.save(chat));
     }
 
-    /**
-     * Actualizar un chat existente
-     */
+    // Actualizar un chat
     @PutMapping("/{codigoChat}")
-    public Chat updateChat(@PathVariable Long codigoChat, @RequestBody Chat chat) throws Exception {
+    public ResponseEntity<Chat> updateChat(@PathVariable Long codigoChat, @RequestBody Chat chat) throws Exception {
         chat.setCodigoChat(codigoChat);
-        return chatService.update(chat);
+        return ResponseEntity.ok(chatService.update(chat));
     }
 
-    /**
-     * Eliminar un chat por ID
-     */
+    // Eliminar un chat por ID
     @DeleteMapping("/{codigoChat}")
-    public void deleteChat(@PathVariable Long codigoChat) throws Exception {
+    public ResponseEntity<Void> deleteChat(@PathVariable Long codigoChat) throws Exception {
         chatService.deleteById(codigoChat);
+        return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Eliminar todos los chats
-     */
+    // Eliminar todos los chats
     @DeleteMapping
-    public void deleteAllChats() throws Exception {
+    public ResponseEntity<Void> deleteAllChats() throws Exception {
         chatService.deleteAll();
+        return ResponseEntity.noContent().build();
     }
 
-    // ========================== FUNCIONALIDAD PERSONALIZADA ==========================
-
-    /**
-     * Crear un nuevo chat entre dos usuarios (verifica existencia previa)
-     */
+    // Crear un nuevo chat entre dos usuarios
     @PostMapping("/crear")
     public ResponseEntity<Chat> crearChat(@RequestBody Chat chat) {
         Chat nuevoChat = chatService.crearChat(chat);
         return ResponseEntity.ok(nuevoChat);
     }
 
-    /**
-     * Obtener todos los chats en los que participa un usuario
-     */
+    // Obtener todos los chats de un usuario
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<Chat>> obtenerChatsPorUsuario(@PathVariable Long usuarioId) {
-        List<Chat> chats = chatService.obtenerChatsPorUsuario(usuarioId);
-        return ResponseEntity.ok(chats);
+        return ResponseEntity.ok(chatService.obtenerChatsPorUsuario(usuarioId));
     }
 
-    /**
-     * Buscar chats por fecha de creación (opcional)
-     */
+    // Buscar chats por fecha de creación
     @GetMapping("/buscar/fecha-creacion")
-    public List<Chat> getChatsByFechaCreacion(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaCreacion) throws Exception {
-        return chatService.findByFechaCreacion(fechaCreacion);
+    public ResponseEntity<List<Chat>> getChatsByFechaCreacion(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaCreacion) throws Exception {
+        return ResponseEntity.ok(chatService.findByFechaCreacion(fechaCreacion));
     }
 }

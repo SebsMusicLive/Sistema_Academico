@@ -21,6 +21,7 @@ public class ChatServiceImpl implements ChatService {
         return chatRepository.findAll();
     }
 
+    @Override
     public Optional<Chat> findById(Long id) throws Exception {
         return chatRepository.findById(id);
     }
@@ -47,15 +48,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Chat crearChat(Chat chat) {
-        // Buscamos si ya existe un chat entre los dos usuarios, sin importar el orden
         Optional<Chat> existente = chatRepository.findByUsuarios(chat.getCodigoUsuario1(), chat.getCodigoUsuario2());
 
-        if (existente.isPresent()) {
-            return existente.get(); // Si ya existe, lo retornamos
-        }
-
-        chat.setFechaCreacion(new Date());
-        return chatRepository.save(chat);
+        return existente.orElseGet(() -> {
+            chat.setFechaCreacion(new Date());
+            return chatRepository.save(chat);
+        });
     }
 
     @Override
@@ -63,11 +61,9 @@ public class ChatServiceImpl implements ChatService {
         return chatRepository.findByCodigoUsuario1IdOrCodigoUsuario2Id(usuarioId, usuarioId);
     }
 
-    // ================= MÉTODOS PERSONALIZADOS =================
-
     @Override
     public void iniciarChat(Chat chat) throws Exception {
-        chat.setFechaCreacion(new Date()); // Fecha actual
+        chat.setFechaCreacion(new Date());
         chatRepository.save(chat);
     }
 
@@ -75,7 +71,7 @@ public class ChatServiceImpl implements ChatService {
     public void cerrarChat(Long id) throws Exception {
         Optional<Chat> chat = chatRepository.findById(id);
         if (chat.isPresent()) {
-            chatRepository.deleteById(id); // Podrías añadir un campo "activo" si no quieres eliminarlo
+            chatRepository.deleteById(id);
         } else {
             throw new Exception("Chat no encontrado");
         }
@@ -91,16 +87,12 @@ public class ChatServiceImpl implements ChatService {
         return chatRepository.findByCodigoUsuario1IdOrCodigoUsuario2Id(usuarioId, usuarioId);
     }
 
+    @Override
     public Optional<Chat> obtenerChatEntreUsuarios(Usuario u1, Usuario u2) {
-        // Buscar en ambas combinaciones (u1-u2 y u2-u1)
         Optional<Chat> chat = chatRepository.findByCodigoUsuario1AndCodigoUsuario2(u1, u2);
-
         if (chat.isEmpty()) {
             chat = chatRepository.findByCodigoUsuario2AndCodigoUsuario1(u1, u2);
         }
-
         return chat;
     }
-
-
 }

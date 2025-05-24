@@ -35,7 +35,7 @@ public class EspacioController {
     public ResponseEntity<Espacio> update(@PathVariable Long id, @RequestBody Espacio nuevoEspacio) throws Exception {
         Optional<Espacio> existente = espacioService.findById(id);
         if (existente.isPresent()) {
-            nuevoEspacio.setCodigoEspacio(id); // Asignación del ID usando el setter correcto
+            nuevoEspacio.setCodigoEspacio(id); // Asigna el ID para actualizar
             return ResponseEntity.ok(espacioService.update(nuevoEspacio));
         }
         return ResponseEntity.notFound().build();

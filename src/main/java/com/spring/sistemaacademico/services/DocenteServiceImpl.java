@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,11 @@ public class DocenteServiceImpl implements DocenteService {
     }
 
     @Override
+    public Optional<Docente> findById(Long id) throws Exception {
+        return docenteRepository.findById(id);
+    }
+
+    @Override
     public Docente save(Docente docente) throws Exception {
         return docenteRepository.save(docente);
     }
@@ -31,11 +37,6 @@ public class DocenteServiceImpl implements DocenteService {
     @Override
     public Docente update(Docente docente) throws Exception {
         return docenteRepository.save(docente);
-    }
-
-    @Override
-    public Semestre findById(Long id) throws Exception {
-        return docenteRepository.findById(id);
     }
 
     @Override
@@ -63,7 +64,6 @@ public class DocenteServiceImpl implements DocenteService {
         return docenteRepository.findByTelefono(telefono);
     }
 
-
     public void asignarCurso(Long idDocente, Curso curso) {
         Docente docente = docenteRepository.findById(idDocente)
                 .orElseThrow(() -> new IllegalArgumentException("Docente no encontrado"));
@@ -86,8 +86,6 @@ public class DocenteServiceImpl implements DocenteService {
 
         Evaluacion evaluacion = new Evaluacion();
         evaluacion.setCodigoCurso(curso);
-        // Puedes añadir más campos como fecha, tipo, ponderación, etc.
-
         evaluacionRepository.save(evaluacion);
     }
 
