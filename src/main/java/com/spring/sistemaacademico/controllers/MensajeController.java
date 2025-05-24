@@ -16,99 +16,59 @@ public class MensajeController {
 
     private final MensajeService mensajeService;
 
-    /**
-     * Obtiene la lista de todos los mensajes
-     */
     @GetMapping
-    public List<Mensaje> getAllMensajes() throws Exception {
-        return mensajeService.findAll();
+    public ResponseEntity<List<Mensaje>> getAll() throws Exception {
+        return ResponseEntity.ok(mensajeService.findAll());
     }
 
-    /**
-     * Obtiene un mensaje por su ID
-     */
-    @GetMapping("/{codigoMensaje}")
-    public ResponseEntity<Mensaje> getMensajeById(@PathVariable Long codigoMensaje) throws Exception {
-        Optional<Mensaje> mensaje = mensajeService.findById(codigoMensaje);
-        return mensaje.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{id}")
+    public ResponseEntity<Mensaje> getById(@PathVariable Long id) throws Exception {
+        Optional<Mensaje> mensaje = mensajeService.findById(id);
+        return mensaje.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-    /**
-     * Crea un nuevo mensaje
-     */
     @PostMapping
-    public Mensaje createMensaje(@RequestBody Mensaje mensaje) throws Exception {
-        return mensajeService.save(mensaje);
+    public ResponseEntity<Mensaje> create(@RequestBody Mensaje mensaje) throws Exception {
+        Mensaje creado = mensajeService.enviarMensaje(mensaje);
+        return ResponseEntity.status(201).body(creado);
     }
 
-    /**
-     * Actualiza un mensaje existente
-     */
-    @PutMapping("/{codigoMensaje}")
-    public Mensaje updateMensaje(@PathVariable Long codigoMensaje, @RequestBody Mensaje mensaje) throws Exception {
-        mensaje.setCodigoMensaje(codigoMensaje);
-        return mensajeService.update(mensaje);
+    @PutMapping("/{id}")
+    public ResponseEntity<Mensaje> update(@PathVariable Long id, @RequestBody Mensaje mensaje) throws Exception {
+        mensaje.setCodigoMensaje(id);
+        Mensaje actualizado = mensajeService.update(mensaje);
+        return ResponseEntity.ok(actualizado);
     }
 
-    /**
-     * Elimina un mensaje por ID
-     */
-    @DeleteMapping("/{codigoMensaje}")
-    public ResponseEntity<Void> deleteMensaje(@PathVariable Long codigoMensaje) throws Exception {
-        mensajeService.deleteById(codigoMensaje);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+        mensajeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Elimina todos los mensajes
-     */
     @DeleteMapping
-    public ResponseEntity<Void> deleteAllMensajes() throws Exception {
+    public ResponseEntity<Void> deleteAll() throws Exception {
         mensajeService.deleteAll();
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Buscar mensajes por contenido
-     */
     @GetMapping("/buscar/contenido")
-    public List<Mensaje> buscarPorContenido(@RequestParam String contenido) throws Exception {
-        return mensajeService.findByContenido(contenido);
+    public ResponseEntity<List<Mensaje>> buscarPorContenido(@RequestParam String contenido) throws Exception {
+        return ResponseEntity.ok(mensajeService.findByContenido(contenido));
     }
 
-    /**
-     * Buscar mensajes por chat
-     */
-    @GetMapping("/buscar/chat")
-    public List<Mensaje> buscarPorChat(@RequestParam Long idChat) throws Exception {
-        return mensajeService.findByChatId(idChat);
-    }
-
-    /**
-     * Obtener todos los mensajes de un chat específico (vía path variable)
-     */
     @GetMapping("/chat/{chatId}")
-    public List<Mensaje> getMensajesPorChat(@PathVariable Long chatId) throws Exception {
-        return mensajeService.obtenerMensajesPorChat(chatId);
+    public ResponseEntity<List<Mensaje>> getMensajesPorChat(@PathVariable Long chatId) throws Exception {
+        return ResponseEntity.ok(mensajeService.obtenerMensajesPorChat(chatId));
     }
 
-    /**
-     * Enviar un nuevo mensaje
-     */
-    @PostMapping("/enviar")
-    public ResponseEntity<Mensaje> enviarMensaje(@RequestBody Mensaje mensaje) throws Exception {
-        Mensaje enviado = mensajeService.enviarMensaje(mensaje);
-        return ResponseEntity.ok(enviado);
+    @GetMapping("/buscar/emisor")
+    public ResponseEntity<List<Mensaje>> buscarPorEmisor(@RequestParam Long idEmisor) throws Exception {
+        return ResponseEntity.ok(mensajeService.findByEmisorId(idEmisor));
     }
 
-    /**
-     * Eliminar un mensaje por su ID (otra variante)
-     */
-    @DeleteMapping("/eliminar/{mensajeId}")
-    public ResponseEntity<Void> eliminarMensaje(@PathVariable Long mensajeId) throws Exception {
-        mensajeService.eliminarMensaje(mensajeId);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/recibir/{idReceptor}")
+    public ResponseEntity<List<Mensaje>> recibirMensajes(@PathVariable Long idReceptor) throws Exception {
+        return ResponseEntity.ok(mensajeService.recibirMensajes(idReceptor));
     }
 }

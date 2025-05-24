@@ -8,12 +8,7 @@ import java.util.List;
 
 @Service
 public interface EvaluacionService extends CrudService<Evaluacion, Long> {
-
-    public List<Evaluacion> findByTipo(String tipo);
-
-    public List<Evaluacion> findByPonderacion(float ponderacion);
-
-    public List<Evaluacion> findByFechaEvaluacion(Date fechaEvaluacion);
-
-
+    List<Evaluacion> findByTipo(String tipo);
+    List<Evaluacion> findByPonderacion(float ponderacion);
+    List<Evaluacion> findByFechaEvaluacion(Date fechaEvaluacion);
 }

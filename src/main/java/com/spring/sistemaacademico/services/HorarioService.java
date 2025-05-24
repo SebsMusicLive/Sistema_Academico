@@ -1,22 +1,33 @@
 package com.spring.sistemaacademico.services;
 
-import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Curso;
-import sistemaAcademico.model.Horario;
+import com.spring.sistemaacademico.model.Curso;
+import com.spring.sistemaacademico.model.Horario;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public interface HorarioService extends CrudService<Horario, Long> {
+public interface HorarioService {
 
-    public List<Horario> findByCodigoCurso(Curso codigoCurso);
+    List<Horario> findAll();
 
-    public List<Horario> findByHoraInicio(Date horaInicio);
+    Optional<Horario> findById(Long id);
 
-    public List<Horario> findByHoraFin(Date horaFin);
+    Horario save(Horario horario);
 
-    public List<Horario> findByTipoSesion(String tipoSesion);
+    Horario update(Horario horario) throws Exception;
+
+    void deleteById(Long id);
+
+    void deleteAll();
+
+    List<Horario> findByCodigoCurso(Curso codigoCurso);
+
+    List<Horario> findByHoraInicio(Date horaInicio);
+
+    List<Horario> findByHoraFin(Date horaFin);
+
+    List<Horario> findByTipoSesion(String tipoSesion);
 
     Horario modificarHorario(Long id, Date nuevaHoraInicio, Date nuevaHoraFin) throws Exception;
 
@@ -24,6 +35,5 @@ public interface HorarioService extends CrudService<Horario, Long> {
 
     boolean verificarDisponibilidad(Curso curso, Date horaInicio, Date horaFin);
 
-    public List<String> optimizarUsoRecursos();
-
+    List<String> optimizarUsoRecursos();
 }

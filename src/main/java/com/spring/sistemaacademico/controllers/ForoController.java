@@ -4,6 +4,7 @@ import com.spring.sistemaacademico.model.Foro;
 import com.spring.sistemaacademico.services.ForoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -11,66 +12,70 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/foros")
+@RequestMapping("/api/foros")
 @RequiredArgsConstructor
 public class ForoController {
 
     private final ForoService foroService;
 
-    /** Obtiene la lista de todos los foros */
     @GetMapping
-    public List<Foro> getAllForos() throws Exception {
-        return foroService.findAll();
+    public ResponseEntity<List<Foro>> getAll() throws Exception {
+        return ResponseEntity.ok(foroService.findAll());
     }
 
-    /** Obtiene un foro por su ID */
-    @GetMapping("/{codigoForo}")
-    public Optional<Foro> getForoById(@PathVariable Long codigoForo) throws Exception {
-        return foroService.findById(codigoForo);
+    @GetMapping("/{id}")
+    public ResponseEntity<Foro> getById(@PathVariable Long id) throws Exception {
+        return foroService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    /** Crea un nuevo foro */
     @PostMapping
-    public Foro createForo(@RequestBody Foro foro) throws Exception {
-        return foroService.save(foro);
+    public ResponseEntity<Foro> save(@RequestBody Foro foro) throws Exception {
+        return ResponseEntity.status(201).body(foroService.save(foro));
     }
 
-    /** Actualiza un foro existente */
-    @PutMapping("/{codigoForo}")
-    public Foro updateForo(@PathVariable Long codigoForo, @RequestBody Foro foro) throws Exception {
-        foro.setCodigoForo(codigoForo);
-        return foroService.update(foro);
+    @PutMapping("/{id}")
+    public ResponseEntity<Foro> update(@PathVariable Long id, @RequestBody Foro foroActualizado) throws Exception {
+        if (foroService.findById(id).isPresent()) {
+            foroActualizado.setCodigoForo(id);
+            return ResponseEntity.ok(foroService.update(foroActualizado));
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    /** Elimina un foro por ID */
-    @DeleteMapping("/{codigoForo}")
-    public void deleteForo(@PathVariable Long codigoForo) throws Exception {
-        foroService.deleteById(codigoForo);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+        if (foroService.findById(id).isPresent()) {
+            foroService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    /** Elimina todos los foros */
     @DeleteMapping
-    public void deleteAllForos() throws Exception {
+    public ResponseEntity<Void> deleteAll() throws Exception {
         foroService.deleteAll();
+        return ResponseEntity.noContent().build();
     }
 
-    /** Buscar foros por título */
-    @GetMapping("/buscar/titulo")
-    public List<Foro> getForosByTitulo(@RequestParam String titulo) throws Exception {
-        return foroService.findByTitulo(titulo);
+    @GetMapping("/titulo/{titulo}")
+    public ResponseEntity<List<Foro>> getByTitulo(@PathVariable String titulo) throws Exception {
+        List<Foro> foros = foroService.findByTitulo(titulo);
+        return foros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(foros);
     }
 
-    /** Buscar foros por descripción */
-    @GetMapping("/buscar/descripcion")
-    public List<Foro> getForosByDescripcion(@RequestParam String descripcion) throws Exception {
-        return foroService.findByDescripcion(descripcion);
+    @GetMapping("/descripcion/{descripcion}")
+    public ResponseEntity<List<Foro>> getByDescripcion(@PathVariable String descripcion) throws Exception {
+        List<Foro> foros = foroService.findByDescripcion(descripcion);
+        return foros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(foros);
     }
 
-    /** Buscar foros por fecha de creación */
-    @GetMapping("/buscar/fecha")
-    public List<Foro> getForosByFechaCreacion(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaCreacion
-    ) throws Exception {
-        return foroService.findByFechaCreacion(fechaCreacion);
+    @GetMapping("/fecha/{fecha}")
+    public ResponseEntity<List<Foro>> getByFechaCreacion(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fecha) throws Exception {
+        List<Foro> foros = foroService.findByFechaCreacion(fecha);
+        return foros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(foros);
     }
 }
+

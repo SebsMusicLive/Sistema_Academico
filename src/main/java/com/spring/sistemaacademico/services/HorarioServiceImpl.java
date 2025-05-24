@@ -1,10 +1,10 @@
 package com.spring.sistemaacademico.services;
+
+import com.spring.sistemaacademico.model.Curso;
+import com.spring.sistemaacademico.model.Horario;
+import com.spring.sistemaacademico.repositories.HorarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Curso;
-import sistemaAcademico.model.Horario;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.HorarioRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,6 +21,11 @@ public class HorarioServiceImpl implements HorarioService {
     }
 
     @Override
+    public Optional<Horario> findById(Long id) {
+        return horarioRepository.findById(id);
+    }
+
+    @Override
     public Horario save(Horario horario) {
         return horarioRepository.save(horario);
     }
@@ -31,11 +36,6 @@ public class HorarioServiceImpl implements HorarioService {
             throw new Exception("El horario no existe o no tiene ID válido.");
         }
         return horarioRepository.save(horario);
-    }
-
-    @Override
-    public Semestre findById(Long id) {
-        return horarioRepository.findById(id);
     }
 
     @Override
@@ -68,8 +68,6 @@ public class HorarioServiceImpl implements HorarioService {
         return horarioRepository.findByTipoSesion(tipoSesion);
     }
 
-    // ----------- MÉTODOS PERSONALIZADOS ------------
-
     @Override
     public Horario modificarHorario(Long id, Date nuevaHoraInicio, Date nuevaHoraFin) throws Exception {
         Horario horario = horarioRepository.findById(id)
@@ -94,10 +92,10 @@ public class HorarioServiceImpl implements HorarioService {
         List<Horario> horariosExistentes = horarioRepository.findByCodigoCurso(curso);
         for (Horario h : horariosExistentes) {
             if (horaInicio.before(h.getHoraFin()) && horaFin.after(h.getHoraInicio())) {
-                return false; // Hay conflicto de horario
+                return false;
             }
         }
-        return true; // No hay conflicto
+        return true;
     }
 
     @Override
@@ -111,8 +109,6 @@ public class HorarioServiceImpl implements HorarioService {
         for (Map.Entry<Curso, List<Horario>> entry : horariosPorCurso.entrySet()) {
             Curso curso = entry.getKey();
             List<Horario> horarios = entry.getValue();
-
-            // Ordenar por hora de inicio
             horarios.sort(Comparator.comparing(Horario::getHoraInicio));
 
             for (int i = 0; i < horarios.size() - 1; i++) {
@@ -121,7 +117,7 @@ public class HorarioServiceImpl implements HorarioService {
 
                 long diferencia = siguiente.getHoraInicio().getTime() - actual.getHoraFin().getTime();
 
-                if (diferencia > 3600000) { // huecos mayores a 1 hora
+                if (diferencia > 3600000) {
                     String mensaje = "Curso '" + curso.getNombre() + "' tiene hueco de "
                             + (diferencia / 60000) + " minutos entre sesiones: "
                             + actual.getHoraFin() + " y " + siguiente.getHoraInicio();

@@ -10,10 +10,6 @@ import java.util.List;
 @Repository
 public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
 
-    //public List<Mensaje> findByContenido(String contenido);
-
-    //public List<Mensaje> findByFechaEnvio(Date fechaEnvio);
-
     List<Mensaje> findByContenidoContainingIgnoreCase(String contenido);
 
     List<Mensaje> findByFechaEnvio(Date fechaEnvio);
@@ -25,5 +21,4 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
     List<Mensaje> findByChatCodigoChat(Long chatId);
 
     List<Mensaje> findByLeidoFalseAndReceptorId(Long receptorId);
-
 }

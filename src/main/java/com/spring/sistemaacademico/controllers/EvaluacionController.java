@@ -4,6 +4,7 @@ import com.spring.sistemaacademico.model.Evaluacion;
 import com.spring.sistemaacademico.services.EvaluacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -11,78 +12,66 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/evaluaciones")
+@RequestMapping("/api/evaluaciones")
 @RequiredArgsConstructor
 public class EvaluacionController {
 
     private final EvaluacionService evaluacionService;
 
-    /**
-     * Obtiene la lista de todas las evaluaciones
-     */
     @GetMapping
-    public List<Evaluacion> getAllEvaluaciones() throws Exception {
-        return evaluacionService.findAll();
+    public ResponseEntity<List<Evaluacion>> getAll() throws Exception {
+        List<Evaluacion> evaluaciones = evaluacionService.findAll();
+        return ResponseEntity.ok(evaluaciones);
     }
 
-    /**
-     * Obtiene una evaluación por su ID
-     */
-    @GetMapping("/{codigoEvaluacion}")
-    public Optional<Evaluacion> getEvaluacionById(@PathVariable Long codigoEvaluacion) throws Exception {
-        return evaluacionService.findById(codigoEvaluacion);
+    @GetMapping("/{id}")
+    public ResponseEntity<Evaluacion> getById(@PathVariable Long id) throws Exception {
+        Optional<Evaluacion> evaluacion = evaluacionService.findById(id);
+        return evaluacion.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /**
-     * Crea una nueva evaluación
-     */
     @PostMapping
-    public Evaluacion createEvaluacion(@RequestBody Evaluacion evaluacion) throws Exception {
-        return evaluacionService.save(evaluacion);
+    public ResponseEntity<Evaluacion> save(@RequestBody Evaluacion evaluacion) throws Exception {
+        Evaluacion saved = evaluacionService.save(evaluacion);
+        return ResponseEntity.status(201).body(saved);
     }
 
-    /**
-     * Actualiza una evaluación existente
-     */
-    @PutMapping("/{codigoEvaluacion}")
-    public Evaluacion updateEvaluacion(@PathVariable Long codigoEvaluacion, @RequestBody Evaluacion evaluacion) throws Exception {
-        evaluacion.setCodigo_evaluacion(codigoEvaluacion);
-        return evaluacionService.update(evaluacion);
+    @PutMapping("/{id}")
+    public ResponseEntity<Evaluacion> update(@PathVariable Long id, @RequestBody Evaluacion evaluacionActualizada) throws Exception {
+        Optional<Evaluacion> existente = evaluacionService.findById(id);
+        if (existente.isPresent()) {
+            evaluacionActualizada.setCodigo_evaluacion(id);
+            return ResponseEntity.ok(evaluacionService.update(evaluacionActualizada));
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    /**
-     * Elimina una evaluación por ID
-     */
-    @DeleteMapping("/{codigoEvaluacion}")
-    public void deleteEvaluacion(@PathVariable Long codigoEvaluacion) throws Exception {
-        evaluacionService.deleteById(codigoEvaluacion);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+        if (evaluacionService.findById(id).isPresent()) {
+            evaluacionService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    /**
-     * Elimina todas las evaluaciones
-     */
-    @DeleteMapping
-    public void deleteAllEvaluaciones() throws Exception {
-        evaluacionService.deleteAll();
+    @GetMapping("/tipo/{tipo}")
+    public ResponseEntity<List<Evaluacion>> getByTipo(@PathVariable String tipo) {
+        List<Evaluacion> result = evaluacionService.findByTipo(tipo);
+        return result.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(result);
     }
 
-    /*
-     * Búsquedas adicionales (por si luego decides implementarlas)
-     */
-
-    @GetMapping("/buscar/tipo")
-    public List<Evaluacion> getByTipo(@RequestParam String tipo) throws Exception {
-        return evaluacionService.findByTipo(tipo);
+    @GetMapping("/ponderacion/{ponderacion}")
+    public ResponseEntity<List<Evaluacion>> getByPonderacion(@PathVariable float ponderacion) {
+        List<Evaluacion> result = evaluacionService.findByPonderacion(ponderacion);
+        return result.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(result);
     }
 
-    @GetMapping("/buscar/ponderacion")
-    public List<Evaluacion> getByPonderacion(@RequestParam float ponderacion) throws Exception {
-        return evaluacionService.findByPonderacion(ponderacion);
+    @GetMapping("/fecha/{fecha}")
+    public ResponseEntity<List<Evaluacion>> getByFechaEvaluacion(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fecha) {
+        List<Evaluacion> result = evaluacionService.findByFechaEvaluacion(fecha);
+        return result.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(result);
     }
-
-    @GetMapping("/buscar/fecha")
-    public List<Evaluacion> getByFechaEvaluacion(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaEvaluacion) throws Exception {
-        return evaluacionService.findByFechaEvaluacion(fechaEvaluacion);
-    }
-
 }

@@ -11,16 +11,18 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Mensaje {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  codigoMensaje;
+    private Long codigoMensaje;
 
     private String contenido;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEnvio;
 
-    private boolean leido; // Nuevo campo: estado del mensaje
+    private boolean leido;
 
     @ManyToOne
     @JoinColumn(name = "codigo_chat")
@@ -33,5 +35,4 @@ public class Mensaje {
     @ManyToOne
     @JoinColumn(name = "codigo_receptor")
     private Usuario receptor;
-
 }

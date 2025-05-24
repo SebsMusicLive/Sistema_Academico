@@ -1,16 +1,21 @@
 package com.spring.sistemaacademico.services;
 
-import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Matricula;
+import com.spring.sistemaacademico.model.Matricula;
 
+import java.util.List;
 import java.util.Optional;
 
-@Service
-public interface MatriculaService extends CrudService<Matricula, Long>{
-    Matricula registrarMatricula(String estudianteId, String cursoId);
-    void cancelarMatricula(String matriculaId);
-    int consultarCuposDisponibles(String cursoId);
-    boolean validarPrerrequisitos(String estudianteId, String cursoId);
+public interface MatriculaService {
 
-    Optional<Matricula> findById(Long aLong) throws Exception;
+    List<Matricula> findAll() throws Exception;
+
+    Matricula save(Matricula matricula) throws Exception;
+
+    Matricula update(Matricula matricula) throws Exception;
+
+    Optional<Matricula> findById(Long id) throws Exception;
+
+    void deleteById(Long id) throws Exception;
+
+    void deleteAll() throws Exception;
 }

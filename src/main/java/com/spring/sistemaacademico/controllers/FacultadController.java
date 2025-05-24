@@ -3,70 +3,51 @@ package com.spring.sistemaacademico.controllers;
 import com.spring.sistemaacademico.model.Facultad;
 import com.spring.sistemaacademico.services.FacultadService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/facultades")
+@RequestMapping("/api/facultades")
 @RequiredArgsConstructor
 public class FacultadController {
 
     private final FacultadService facultadService;
 
-    /**
-     * Obtiene la lista de todas las facultades
-     */
     @GetMapping
-    public List<Facultad> getAllFacultades() throws Exception {
-        return facultadService.findAll();
+    public ResponseEntity<List<Facultad>> findAll() throws Exception {
+        return ResponseEntity.ok(facultadService.findAll());
     }
 
-    /**
-     * Obtiene una facultad por su ID
-     */
-    @GetMapping("/{codigoFacultad}")
-    public Optional<Facultad> getFacultadById(@PathVariable Long codigoFacultad) throws Exception {
-        return facultadService.findById(codigoFacultad);
+    @GetMapping("/{id}")
+    public ResponseEntity<Facultad> findById(@PathVariable Long id) throws Exception {
+        return facultadService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /**
-     * Crea una nueva facultad
-     */
     @PostMapping
-    public Facultad createFacultad(@RequestBody Facultad facultad) throws Exception {
-        return facultadService.save(facultad);
+    public ResponseEntity<Facultad> save(@RequestBody Facultad facultad) throws Exception {
+        return ResponseEntity.status(201).body(facultadService.save(facultad));
     }
 
-    /**
-     * Actualiza una facultad existente
-     */
-    @PutMapping("/{codigoFacultad}")
-    public Facultad updateFacultad(@PathVariable Long codigoFacultad, @RequestBody Facultad facultad) throws Exception {
-        facultad.setCodigoFacultad(codigoFacultad);
-        return facultadService.update(facultad);
+    @PutMapping("/{id}")
+    public ResponseEntity<Facultad> update(@PathVariable Long id, @RequestBody Facultad facultad) throws Exception {
+        facultad.setCodigoFacultad(id);
+        return ResponseEntity.ok(facultadService.update(facultad));
     }
 
-    /**
-     * Elimina una facultad por su ID
-     */
-    @DeleteMapping("/{codigoFacultad}")
-    public void deleteFacultad(@PathVariable Long codigoFacultad) throws Exception {
-        facultadService.deleteById(codigoFacultad);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) throws Exception {
+        facultadService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Elimina todas las facultades
-     */
-    @DeleteMapping
-    public void deleteAllFacultades() throws Exception {
-        facultadService.deleteAll();
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<Facultad>> findByNombre(@PathVariable String nombre) {
+        List<Facultad> facultades = facultadService.findByNombre(nombre);
+        return facultades.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(facultades);
     }
-
-    @GetMapping("/buscar/nombre")
-    public List<Facultad> getFacultadesByNombre(@RequestParam String nombre) throws Exception {
-        return facultadService.findByNombre(nombre);
-    }
-
 }
+

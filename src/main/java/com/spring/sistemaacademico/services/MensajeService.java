@@ -1,18 +1,26 @@
 package com.spring.sistemaacademico.services;
 
-import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Mensaje;
+import com.spring.sistemaacademico.model.Mensaje;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public interface MensajeService extends CrudService<Mensaje, Long> {
+public interface MensajeService {
 
-    Mensaje enviarMensaje(Mensaje mensaje) throws Exception;
+    List<Mensaje> findAll() throws Exception;
 
     Optional<Mensaje> findById(Long id) throws Exception;
+
+    Mensaje save(Mensaje mensaje) throws Exception;
+
+    Mensaje update(Mensaje mensaje) throws Exception;
+
+    void deleteById(Long id) throws Exception;
+
+    void deleteAll() throws Exception;
+
+    Mensaje enviarMensaje(Mensaje mensaje) throws Exception;
 
     List<Mensaje> recibirMensajes(Long idReceptor) throws Exception;
 
@@ -25,7 +33,4 @@ public interface MensajeService extends CrudService<Mensaje, Long> {
     List<Mensaje> findByEmisorId(Long emisorId) throws Exception;
 
     List<Mensaje> obtenerMensajesPorChat(Long chatId) throws Exception;
-
-    void eliminarMensaje(Long mensajeId) throws Exception;
-
 }

@@ -1,10 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Nota;
+import com.spring.sistemaacademico.repositories.NotaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Nota;
-import sistemaAcademico.repository.NotaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +12,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NotaServiceImpl implements NotaService {
 
-    @Autowired
     private final NotaRepository notaRepository;
 
     @Override

@@ -1,83 +1,84 @@
 package com.spring.sistemaacademico.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.sistemaacademico.model.CursoHistorial;
+import com.spring.sistemaacademico.model.EstadoCurso;
+import com.spring.sistemaacademico.model.HistorialAcademico;
+import com.spring.sistemaacademico.repositories.HistorialAcademicoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.*;
-import sistemaAcademico.repository.HistorialAcademicoRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class HistorialAcademicoServiceImpl implements HistorialAcademicoService {
 
-    @Autowired
-    private HistorialAcademicoRepository historialAcademicoRepository;
+    private final HistorialAcademicoRepository historialRepo;
 
     @Override
-    public List<HistorialAcademico> findAll() throws Exception {
-        return historialAcademicoRepository.findAll();
+    public List<HistorialAcademico> findAll() {
+        return historialRepo.findAll();
     }
 
     @Override
-    public HistorialAcademico save(HistorialAcademico historial) throws Exception {
-        return historialAcademicoRepository.save(historial);
+    public Optional<HistorialAcademico> findById(Long id) {
+        return historialRepo.findById(id);
+    }
+
+    @Override
+    public HistorialAcademico save(HistorialAcademico historial) {
+        return historialRepo.save(historial);
     }
 
     @Override
     public HistorialAcademico update(HistorialAcademico historial) throws Exception {
-        if (historial.getCodigoHistorialAcademico() == null ||
-                !historialAcademicoRepository.existsById(historial.getCodigoHistorialAcademico())) {
-            throw new Exception("El historial no existe o no tiene ID válido");
+        if (historial.getCodigoHistorialAcademico() == null || !historialRepo.existsById(historial.getCodigoHistorialAcademico())) {
+            throw new Exception("Historial no encontrado");
         }
-        return historialAcademicoRepository.save(historial);
+        return historialRepo.save(historial);
     }
 
     @Override
-    public Semestre findById(Long id) throws Exception {
-        return historialAcademicoRepository.findById(id);
+    public void deleteById(Long id) {
+        historialRepo.deleteById(id);
     }
 
     @Override
-    public void deleteById(Long id) throws Exception {
-        historialAcademicoRepository.deleteById(id);
-    }
-
-    @Override
-    public void deleteAll() throws Exception {
-        historialAcademicoRepository.deleteAll();
+    public void deleteAll() {
+        historialRepo.deleteAll();
     }
 
     @Override
     public List<HistorialAcademico> findByPromedioGeneral(float promedioGeneral) {
-        return historialAcademicoRepository.findByPromedioGeneral(promedioGeneral);
+        return historialRepo.findByPromedioGeneral(promedioGeneral);
     }
 
-    // Métodos personalizados
-
-    public String generarReporteDesempeño(Long idHistorial) throws Exception {
+    @Override
+    public String generarReporteDesempeno(Long idHistorial) throws Exception {
         HistorialAcademico historial = findById(idHistorial)
                 .orElseThrow(() -> new Exception("Historial no encontrado"));
         return "Promedio general del estudiante: " + historial.getPromedioGeneral();
     }
 
+    @Override
     public float calcularProyeccionRendimiento(Long idHistorial) throws Exception {
         HistorialAcademico historial = findById(idHistorial)
                 .orElseThrow(() -> new Exception("Historial no encontrado"));
 
         List<CursoHistorial> cursos = historial.getCursoHistorial();
-        if (cursos.isEmpty()) {
-            return 0.0f;
-        }
+        if (cursos.isEmpty()) return 0.0f;
 
-        float total = 0;
+        float suma = 0;
         for (CursoHistorial ch : cursos) {
-            total += ch.getCalificacionFinal();
+            suma += ch.getCalificacionFinal();
         }
 
-        return total / cursos.size();
+        return suma / cursos.size();
     }
 
+    @Override
     public List<CursoHistorial> generarReporteCursosAprobados(Long idHistorial) throws Exception {
         HistorialAcademico historial = findById(idHistorial)
                 .orElseThrow(() -> new Exception("Historial no encontrado"));
@@ -87,6 +88,7 @@ public class HistorialAcademicoServiceImpl implements HistorialAcademicoService 
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<CursoHistorial> generarReporteCursosEnProceso(Long idHistorial) throws Exception {
         HistorialAcademico historial = findById(idHistorial)
                 .orElseThrow(() -> new Exception("Historial no encontrado"));
@@ -96,16 +98,17 @@ public class HistorialAcademicoServiceImpl implements HistorialAcademicoService 
                 .collect(Collectors.toList());
     }
 
+    @Override
     public HistorialAcademico agregarCursoHistorial(Long idHistorial, CursoHistorial nuevoCurso) throws Exception {
         HistorialAcademico historial = findById(idHistorial)
                 .orElseThrow(() -> new Exception("Historial no encontrado"));
 
         nuevoCurso.setHistorialAcademico(historial);
         historial.getCursoHistorial().add(nuevoCurso);
-
-        return historialAcademicoRepository.save(historial);
+        return historialRepo.save(historial);
     }
 
+    @Override
     public List<CursoHistorial> consultarHistorial(Long idHistorial) throws Exception {
         HistorialAcademico historial = findById(idHistorial)
                 .orElseThrow(() -> new Exception("Historial no encontrado"));

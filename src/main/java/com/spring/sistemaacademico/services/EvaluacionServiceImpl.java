@@ -1,66 +1,65 @@
 package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.Evaluacion;
-import com.spring.sistemaacademico.model.Semestre;
 import com.spring.sistemaacademico.repositories.EvaluacionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EvaluacionServiceImpl implements EvaluacionService {
 
-    @Autowired
-    private EvaluacionRepository evaluacionRepository;
+    private final EvaluacionRepository repository;
 
     @Override
     public List<Evaluacion> findAll() throws Exception {
-        return evaluacionRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Evaluacion save(Evaluacion evaluacion) throws Exception {
-        return evaluacionRepository.save(evaluacion);
+        return repository.save(evaluacion);
     }
 
     @Override
     public Evaluacion update(Evaluacion evaluacion) throws Exception {
-        if (evaluacion.getCodigo_evaluacion() == null ||
-                !evaluacionRepository.existsById(evaluacion.getCodigo_evaluacion())) {
-            throw new Exception("La evaluación no existe o no tiene un ID válido");
+        if (evaluacion.getCodigo_evaluacion() == null || !repository.existsById(evaluacion.getCodigo_evaluacion())) {
+            throw new Exception("Evaluación no encontrada");
         }
-        return evaluacionRepository.save(evaluacion);
+        return repository.save(evaluacion);
     }
 
     @Override
-    public Semestre findById(Long id) throws Exception {
-        return evaluacionRepository.findById(id);
+    public Optional<Evaluacion> findById(Long id) throws Exception {
+        return repository.findById(id);
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
-        evaluacionRepository.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
     public void deleteAll() throws Exception {
-        evaluacionRepository.deleteAll();
+        repository.deleteAll();
     }
 
     @Override
     public List<Evaluacion> findByTipo(String tipo) {
-        return evaluacionRepository.findByTipo(tipo);
+        return repository.findByTipo(tipo);
     }
 
     @Override
     public List<Evaluacion> findByPonderacion(float ponderacion) {
-        return evaluacionRepository.findByPonderacion(ponderacion);
+        return repository.findByPonderacion(ponderacion);
     }
 
     @Override
     public List<Evaluacion> findByFechaEvaluacion(Date fechaEvaluacion) {
-        return evaluacionRepository.findByFechaEvaluacion(fechaEvaluacion);
+        return repository.findByFechaEvaluacion(fechaEvaluacion);
     }
 }

@@ -1,11 +1,23 @@
 package com.spring.sistemaacademico.services;
 
-import org.springframework.stereotype.Service;
-import sistemaAcademico.model.HistorialAcademico;
+import com.spring.sistemaacademico.model.CursoHistorial;
+import com.spring.sistemaacademico.model.HistorialAcademico;
 
 import java.util.List;
-@Service
+
 public interface HistorialAcademicoService extends CrudService<HistorialAcademico, Long> {
 
-    public List<HistorialAcademico> findByPromedioGeneral(float promedioGeneral);
+    List<HistorialAcademico> findByPromedioGeneral(float promedioGeneral);
+
+    String generarReporteDesempeno(Long idHistorial) throws Exception;
+
+    float calcularProyeccionRendimiento(Long idHistorial) throws Exception;
+
+    List<CursoHistorial> generarReporteCursosAprobados(Long idHistorial) throws Exception;
+
+    List<CursoHistorial> generarReporteCursosEnProceso(Long idHistorial) throws Exception;
+
+    HistorialAcademico agregarCursoHistorial(Long idHistorial, CursoHistorial nuevoCurso) throws Exception;
+
+    List<CursoHistorial> consultarHistorial(Long idHistorial) throws Exception;
 }

@@ -3,7 +3,7 @@ package com.spring.sistemaacademico.controllers;
 import com.spring.sistemaacademico.model.Nota;
 import com.spring.sistemaacademico.services.NotaService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,41 +16,43 @@ public class NotaController {
 
     private final NotaService notaService;
 
-    // Guardar o actualizar una nota
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Nota guardarNota(@RequestBody Nota nota) {
-        return notaService.guardarNota(nota);
-    }
-
-    // Obtener todas las notas
     @GetMapping
-    public List<Nota> obtenerTodasLasNotas() {
-        return notaService.obtenerTodasLasNotas();
+    public ResponseEntity<List<Nota>> getAll() {
+        return ResponseEntity.ok(notaService.obtenerTodasLasNotas());
     }
 
-    // Obtener una nota por ID
     @GetMapping("/{id}")
-    public Optional<Nota> obtenerNotaPorId(@PathVariable Long id) {
-        return notaService.obtenerNotaPorId(id);
+    public ResponseEntity<Nota> getById(@PathVariable Long id) {
+        Optional<Nota> nota = notaService.obtenerNotaPorId(id);
+        return nota.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Eliminar una nota por ID
+    @PostMapping
+    public ResponseEntity<Nota> create(@RequestBody Nota nota) {
+        Nota nueva = notaService.guardarNota(nota);
+        return ResponseEntity.status(201).body(nueva);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Nota> update(@PathVariable Long id, @RequestBody Nota nota) {
+        nota.setCodigoNota(id);
+        Nota actualizada = notaService.guardarNota(nota);
+        return ResponseEntity.ok(actualizada);
+    }
+
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminarNota(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         notaService.eliminarNota(id);
+        return ResponseEntity.noContent().build();
     }
 
-    // Obtener notas por el ID del estudiante
     @GetMapping("/estudiante/{idEstudiante}")
-    public List<Nota> obtenerNotasPorEstudiante(@PathVariable Long idEstudiante) {
-        return notaService.obtenerNotasPorEstudiante(idEstudiante);
+    public ResponseEntity<List<Nota>> getByEstudiante(@PathVariable Long idEstudiante) {
+        return ResponseEntity.ok(notaService.obtenerNotasPorEstudiante(idEstudiante));
     }
 
-    // Obtener notas por el ID de la evaluación
     @GetMapping("/evaluacion/{idEvaluacion}")
-    public List<Nota> obtenerNotasPorEvaluacion(@PathVariable Long idEvaluacion) {
-        return notaService.obtenerNotasPorEvaluacion(idEvaluacion);
+    public ResponseEntity<List<Nota>> getByEvaluacion(@PathVariable Long idEvaluacion) {
+        return ResponseEntity.ok(notaService.obtenerNotasPorEvaluacion(idEvaluacion));
     }
 }

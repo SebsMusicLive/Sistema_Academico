@@ -3,75 +3,57 @@ package com.spring.sistemaacademico.controllers;
 import com.spring.sistemaacademico.model.Matricula;
 import com.spring.sistemaacademico.services.MatriculaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/matriculas")
+@RequestMapping("/api/matriculas")
 @RequiredArgsConstructor
 public class MatriculaController {
 
     private final MatriculaService matriculaService;
 
-    /**
-     * Obtiene la lista de todas las matrículas
-     */
     @GetMapping
-    public List<Matricula> getAllMatriculas() throws Exception {
-        return matriculaService.findAll();
+    public ResponseEntity<List<Matricula>> getAll() throws Exception {
+        return ResponseEntity.ok(matriculaService.findAll());
     }
 
-    /**
-     * Obtiene una matrícula por su ID
-     */
-    @GetMapping("/{codigoMatricula}")
-    public Optional<Matricula> getMatriculaById(@PathVariable Long codigoMatricula) throws Exception {
-        return matriculaService.findById(codigoMatricula);
+    @GetMapping("/{id}")
+    public ResponseEntity<Matricula> getById(@PathVariable Long id) throws Exception {
+        Optional<Matricula> matricula = matriculaService.findById(id);
+        return matricula.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Crea una nueva matrícula
-     */
     @PostMapping
-    public Matricula createMatricula(@RequestBody Matricula matricula) throws Exception {
-        return matriculaService.save(matricula);
+    public ResponseEntity<Matricula> save(@RequestBody Matricula matricula) throws Exception {
+        return ResponseEntity.status(201).body(matriculaService.save(matricula));
     }
 
-    /**
-     * Actualiza una matrícula existente
-     */
-    @PutMapping("/{codigoMatricula}")
-    public Matricula updateMatricula(@PathVariable Long codigoMatricula, @RequestBody Matricula matricula) throws Exception {
-        matricula.setCodigoMatricula(codigoMatricula);
-        return matriculaService.update(matricula);
+    @PutMapping("/{id}")
+    public ResponseEntity<Matricula> update(@PathVariable Long id, @RequestBody Matricula matricula) throws Exception {
+        if (matriculaService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        matricula.setCodigoMatricula(id);
+        return ResponseEntity.ok(matriculaService.update(matricula));
     }
 
-    /**
-     * Elimina una matrícula por ID
-     */
-    @DeleteMapping("/{codigoMatricula}")
-    public void deleteMatricula(@PathVariable Long codigoMatricula) throws Exception {
-        matriculaService.deleteById(codigoMatricula);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+        if (matriculaService.findById(id).isPresent()) {
+            matriculaService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    /**
-     * Elimina todas las matrículas
-     */
     @DeleteMapping
-    public void deleteAllMatriculas() throws Exception {
+    public ResponseEntity<Void> deleteAll() throws Exception {
         matriculaService.deleteAll();
+        return ResponseEntity.noContent().build();
     }
-
-    /*
-     * Métodos personalizados futuros:
-     * Descomenta e implementa estos métodos en el servicio y repositorio si los necesitas.
-     */
-    /*
-    @GetMapping("/buscar/fecha")
-    public List<Matricula> getMatriculasByFecha(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaMatricula) throws Exception {
-        return matriculaService.findByFechaMatricula(fechaMatricula);
-    }
-    */
 }

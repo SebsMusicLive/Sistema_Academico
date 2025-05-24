@@ -14,15 +14,18 @@ import java.util.Date;
 public class Horario {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigoHorario;
 
     @ManyToOne
     @JoinColumn(name = "codigo_curso")
     private Curso codigoCurso;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaInicio;
-    private Date horaFin;
-    private String tipoSesion;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date horaFin;
+
+    private String tipoSesion;
 }
