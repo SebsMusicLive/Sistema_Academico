@@ -23,8 +23,8 @@ public class MatriculaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Matricula> getById(@PathVariable Long id) throws Exception {
-        Optional<Matricula> matricula = matriculaService.findById(id);
-        return matricula.map(ResponseEntity::ok)
+        return matriculaService.findById(id)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -35,20 +35,27 @@ public class MatriculaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Matricula> update(@PathVariable Long id, @RequestBody Matricula matricula) throws Exception {
-        if (matriculaService.findById(id).isEmpty()) {
+        Optional<Matricula> optional = matriculaService.findById(id);
+
+        if (optional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         matricula.setCodigoMatricula(id);
-        return ResponseEntity.ok(matriculaService.update(matricula));
+        Matricula updated = matriculaService.update(matricula);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
-        if (matriculaService.findById(id).isPresent()) {
-            matriculaService.deleteById(id);
-            return ResponseEntity.noContent().build();
+        Optional<Matricula> optional = matriculaService.findById(id);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+
+        matriculaService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping

@@ -1,42 +1,41 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Rol;
+import com.spring.sistemaacademico.model.Usuario;
+import com.spring.sistemaacademico.repositories.RolRepository;
+import com.spring.sistemaacademico.repositories.UsuarioRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Rol;
-import sistemaAcademico.repository.RolRepository;
-import sistemaAcademico.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class RolServiceImpl extends RolService {
+public class RolServiceImpl implements RolService {
 
+    private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
-
-    public RolServiceImpl(UsuarioRepository usuarioRepository, RolRepository rolRepository, RolRepository rolRepository1) {
-        super(usuarioRepository, rolRepository);
-        this.rolRepository = rolRepository1;
-    }
 
     @Override
     public List<Rol> findAll() throws Exception {
         return rolRepository.findAll();
     }
 
+    @Override
     public Optional<Rol> findById(Long id) throws Exception {
         return rolRepository.findById(id);
     }
 
     @Override
-    public Rol save(Rol entity) throws Exception {
-        return rolRepository.save(entity);
+    public Rol save(Rol rol) throws Exception {
+        return rolRepository.save(rol);
     }
 
     @Override
-    public Rol update(Rol entity) throws Exception {
-        return rolRepository.save(entity);
+    public Rol update(Rol rol) throws Exception {
+        return rolRepository.save(rol);
     }
 
     @Override
@@ -57,5 +56,24 @@ public class RolServiceImpl extends RolService {
     @Override
     public List<Rol> findByTipoRol(String tipoRol) throws Exception {
         return rolRepository.findByTipoRol(tipoRol);
+    }
+
+    @Override
+    public void asignarRol(Long codigoUsuario, Long codigoRol) throws Exception {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(codigoUsuario);
+        Optional<Rol> rolOpt = rolRepository.findById(codigoRol);
+
+        if (usuarioOpt.isEmpty()) {
+            throw new RuntimeException("Usuario no encontrado con código: " + codigoUsuario);
+        }
+        if (rolOpt.isEmpty()) {
+            throw new RuntimeException("Rol no encontrado con código: " + codigoRol);
+        }
+
+        Usuario usuario = usuarioOpt.get();
+        Rol rol = rolOpt.get();
+
+        usuario.setRol(rol);
+        usuarioRepository.save(usuario);
     }
 }

@@ -3,6 +3,7 @@ package com.spring.sistemaacademico.controllers;
 import com.spring.sistemaacademico.model.Rol;
 import com.spring.sistemaacademico.services.RolService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,13 @@ public class RolController {
     }
 
     @GetMapping("/{codigoRol}")
-    public Optional<Rol> getRolById(@PathVariable Long codigoRol) throws Exception {
-        return rolService.findById(codigoRol);
+    public ResponseEntity<Rol> getRolById(@PathVariable Long codigoRol) throws Exception {
+        Optional<Rol> rolOpt = rolService.findById(codigoRol);
+        if (rolOpt.isPresent()) {
+            return ResponseEntity.ok(rolOpt.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping

@@ -36,20 +36,21 @@ public class HistorialAcademicoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<HistorialAcademico> update(@PathVariable Long id, @RequestBody HistorialAcademico historial) throws Exception {
-        if (historialService.findById(id).isPresent()) {
-            historial.setCodigoHistorialAcademico(id);
-            return ResponseEntity.ok(historialService.update(historial));
+        Optional<HistorialAcademico> existing = historialService.findById(id);
+        if (existing.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        historial.setCodigoHistorialAcademico(id);
+        return ResponseEntity.ok(historialService.update(historial));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
-        if (historialService.findById(id).isPresent()) {
-            historialService.deleteById(id);
-            return ResponseEntity.noContent().build();
+        if (historialService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        historialService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
@@ -86,8 +87,12 @@ public class HistorialAcademicoController {
     }
 
     @PostMapping("/{id}/agregar-curso")
-    public ResponseEntity<HistorialAcademico> agregarCurso(@PathVariable Long id, @RequestBody CursoHistorial curso) throws Exception {
-        return ResponseEntity.ok(historialService.agregarCursoHistorial(id, curso));
+    public ResponseEntity<HistorialAcademico> agregarCurso(@PathVariable Long id, @RequestBody CursoHistorial curso) {
+        try {
+            return ResponseEntity.ok(historialService.agregarCursoHistorial(id, curso));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}/cursos")

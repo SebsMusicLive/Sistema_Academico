@@ -21,6 +21,9 @@ public class Usuario {
     private String nombre;
     private String clave;
 
+    // Agrega el correo aquí:
+    private String correo;
+
     // Relación con el rol (Estudiante, Docente, Administración, etc.)
     @ManyToOne
     @JoinColumn(name = "codigo_rol")

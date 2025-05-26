@@ -1,23 +1,28 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.repositories.SemestreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.SemestreRepository;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public abstract class SemestreServiceImpl implements SemestreService {
+public class SemestreServiceImpl implements SemestreService {
+
+    private final SemestreRepository semestreRepository;
+
+    private Long semestreActivoId; // Id del semestre activo, se puede mejorar con otra estrategia
 
     @Autowired
-    private SemestreRepository semestreRepository;
+    public SemestreServiceImpl(SemestreRepository semestreRepository) {
+        this.semestreRepository = semestreRepository;
+    }
 
-    private Long semestreActivoId; // Suponiendo que se guarda el semestre actual activo
-
-    // Método para definir fechas de inicio y fin del semestre activo
     public void definirFechasInicioFin(Date fechaInicio, Date fechaFin) throws Exception {
         if (semestreActivoId == null) {
             throw new Exception("No hay semestre activo seleccionado.");
@@ -31,15 +36,13 @@ public abstract class SemestreServiceImpl implements SemestreService {
         semestreRepository.save(semestre);
     }
 
-    // Método para cerrar el semestre (ej: quitarlo como activo)
     public void cerrarSemestre() throws Exception {
         if (semestreActivoId == null) {
             throw new Exception("No hay semestre activo para cerrar.");
         }
-        semestreActivoId = null; // Cierra el semestre (ejemplo de implementación simple)
+        semestreActivoId = null;
     }
 
-    // Método para generar un calendario académico en formato String
     public String generarCalendarioAcademico() throws Exception {
         if (semestreActivoId == null) {
             throw new Exception("No hay semestre activo.");
@@ -56,19 +59,16 @@ public abstract class SemestreServiceImpl implements SemestreService {
                 "Fin: " + sdf.format(semestre.getFechaFin()) + "\n";
     }
 
-    // Métodos de CrudService
-
     @Override
     public Semestre save(Semestre semestre) throws Exception {
         Semestre saved = semestreRepository.save(semestre);
-        semestreActivoId = saved.getCodigoSemestre(); // Asignar como activo al guardar
+        semestreActivoId = saved.getCodigoSemestre();
         return saved;
     }
 
     @Override
-    public Semestre findById(Long id) throws Exception {
-        return semestreRepository.findById(id)
-                .orElseThrow(() -> new Exception("Semestre no encontrado"));
+    public Optional<Semestre> findById(Long id) throws Exception {
+        return semestreRepository.findById(id);
     }
 
     @Override
@@ -79,6 +79,11 @@ public abstract class SemestreServiceImpl implements SemestreService {
     @Override
     public void deleteById(Long id) throws Exception {
         semestreRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll() throws Exception {
+        semestreRepository.deleteAll();
     }
 
     @Override

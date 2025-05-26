@@ -23,18 +23,29 @@ public class NotaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Nota> getById(@PathVariable Long id) {
-        Optional<Nota> nota = notaService.obtenerNotaPorId(id);
-        return nota.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return notaService.obtenerNotaPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<Nota> create(@RequestBody Nota nota) {
+        if (nota == null || nota.getEstudiante() == null || nota.getEvaluacion() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         Nota nueva = notaService.guardarNota(nota);
         return ResponseEntity.status(201).body(nueva);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Nota> update(@PathVariable Long id, @RequestBody Nota nota) {
+        Optional<Nota> notaExistente = notaService.obtenerNotaPorId(id);
+        if (notaExistente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        if (nota == null || nota.getEstudiante() == null || nota.getEvaluacion() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         nota.setCodigoNota(id);
         Nota actualizada = notaService.guardarNota(nota);
         return ResponseEntity.ok(actualizada);
@@ -42,6 +53,10 @@ public class NotaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        Optional<Nota> nota = notaService.obtenerNotaPorId(id);
+        if (nota.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         notaService.eliminarNota(id);
         return ResponseEntity.noContent().build();
     }

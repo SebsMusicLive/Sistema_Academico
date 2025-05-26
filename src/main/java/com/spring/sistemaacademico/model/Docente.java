@@ -13,9 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-
-
-public class Docente extends Persona{
+public class Docente extends Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +23,15 @@ public class Docente extends Persona{
     @JoinColumn(name = "codigo_departamento", nullable = false)
     private Departamento codigoDepartamento;
 
-
     private String titulo;
     private String especializacion;
     private int cargaHoraria;
 
-    // Agregando la relación con AsignacionDocente
-    @OneToMany(mappedBy = "docente") // Relación manejada por el campo 'docente' en AsignacionDocente
+    private int maxHoras; // ✅ nuevo atributo requerido
+
+    @OneToMany(mappedBy = "docente")
     private List<AsignacionDocente> asignaciones;
 
-    // Agregando la relación con Curso
     @OneToMany(mappedBy = "codigoDocente")
     private List<Curso> cursos;
-
 }

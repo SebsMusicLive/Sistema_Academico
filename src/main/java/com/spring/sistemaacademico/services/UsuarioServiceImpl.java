@@ -1,16 +1,18 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.model.Usuario;
+import com.spring.sistemaacademico.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.model.Usuario;
-import sistemaAcademico.repository.UsuarioRepository;
+
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
@@ -20,7 +22,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public Semestre findById(Long id) throws Exception {
+    public Optional<Usuario> findById(Long id) throws Exception {
         return usuarioRepository.findById(id);
     }
 
@@ -31,11 +33,21 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public Usuario update(Usuario entity) throws Exception {
+        if (entity.getCodigoUsuario() == null) {
+            throw new Exception("El código del usuario es obligatorio para actualizar");
+        }
+        // Verifica que exista el usuario antes de actualizar
+        Usuario usuarioExistente = usuarioRepository.findById(entity.getCodigoUsuario())
+                .orElseThrow(() -> new Exception("Usuario no encontrado para actualizar"));
+        // Puedes agregar lógica para actualizar solo ciertos campos si quieres
         return usuarioRepository.save(entity);
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
+        // Verifica que exista antes de borrar
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new Exception("Usuario no encontrado para eliminar"));
         usuarioRepository.deleteById(id);
     }
 
@@ -44,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuarioRepository.deleteAll();
     }
 
-    // ========== MÉTODOS PERSONALIZADOS ==========
+    // ======== MÉTODOS PERSONALIZADOS ========
 
     @Override
     public void iniciarSesion(Long idUsuario) throws Exception {
@@ -79,12 +91,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public void recuperarContrasena(Long idUsuario) throws Exception {
-        // Aquí puedes implementar lógica para enviar un correo o mensaje con la contraseña temporal
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new Exception("Usuario no encontrado"));
 
-        // Ejemplo: reiniciar la contraseña con una temporal (en una app real, deberías notificarla)
-        usuario.setClave("temporal123"); // ⚠️ Reemplazar con lógica segura
+        // Aquí deberías implementar lógica real segura, esto es solo un ejemplo
+        usuario.setClave("temporal123");
         usuarioRepository.save(usuario);
     }
 

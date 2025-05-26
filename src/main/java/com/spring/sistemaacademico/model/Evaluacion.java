@@ -28,4 +28,6 @@ public class Evaluacion {
 
     @OneToMany(mappedBy = "codigo_evaluacion")
     private List<Calificacion> calificaciones;
+
+
 }

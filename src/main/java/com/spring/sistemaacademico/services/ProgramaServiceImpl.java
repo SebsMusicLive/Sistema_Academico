@@ -1,14 +1,14 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Curso;
+import com.spring.sistemaacademico.model.Programa;
+import com.spring.sistemaacademico.repositories.CursoRepository;
+import com.spring.sistemaacademico.repositories.ProgramaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Curso;
-import sistemaAcademico.model.Programa;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.CursoRepository;
-import sistemaAcademico.repository.ProgramaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProgramaServiceImpl implements ProgramaService {
@@ -38,12 +38,15 @@ public class ProgramaServiceImpl implements ProgramaService {
     }
 
     @Override
-    public Semestre findById(Long id) throws Exception {
+    public Optional<Programa> findById(Long id) throws Exception {
         return programaRepository.findById(id);
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
+        if (!programaRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar: programa no encontrado");
+        }
         programaRepository.deleteById(id);
     }
 
@@ -62,7 +65,7 @@ public class ProgramaServiceImpl implements ProgramaService {
         return programaRepository.findByDescripcion(descripcion);
     }
 
-    // 👉 Métodos personalizados
+    // Métodos personalizados
 
     @Override
     public Programa registrarPrograma(Programa programa) throws Exception {
@@ -101,7 +104,7 @@ public class ProgramaServiceImpl implements ProgramaService {
         Programa programa = programaRepository.findById(programaId)
                 .orElseThrow(() -> new Exception("Programa no encontrado"));
 
-        programa.setDescripcion(nuevosContenidos); // Cambiado a 'descripcion' como campo existente
+        programa.setDescripcion(nuevosContenidos);
 
         return programaRepository.save(programa);
     }

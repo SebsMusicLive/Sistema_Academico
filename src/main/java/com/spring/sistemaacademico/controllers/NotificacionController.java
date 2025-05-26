@@ -19,7 +19,7 @@ public class NotificacionController {
     private final NotificacionService notificacionService;
     private final NotificacionEmailService notificacionEmailService;
 
-    // ------------------ CRUD BÁSICO ------------------
+    // CRUD BÁSICO
 
     @GetMapping
     public List<Notificacion> getAllNotificaciones() throws Exception {
@@ -29,6 +29,20 @@ public class NotificacionController {
     @GetMapping("/{codigoNotificacion}")
     public Optional<Notificacion> getNotificacionById(@PathVariable Long codigoNotificacion) throws Exception {
         return notificacionService.findById(codigoNotificacion);
+    }
+
+    @PostMapping
+    public Notificacion createNotificacion(@RequestBody Notificacion notificacion) throws Exception {
+        Notificacion nuevaNotificacion = notificacionService.save(notificacion);
+
+        String correoDestino = notificacion.getUsuario().getCorreo(); // Asegúrate que 'correo' existe en Usuario
+        notificacionEmailService.enviarNotificacion(
+                correoDestino,
+                "Nueva Notificación",
+                notificacion.getMensaje()
+        );
+
+        return nuevaNotificacion;
     }
 
     @PutMapping("/{codigoNotificacion}")
@@ -48,7 +62,7 @@ public class NotificacionController {
         notificacionService.deleteAll();
     }
 
-    // ------------------ CONSULTAS AVANZADAS ------------------
+    // CONSULTAS AVANZADAS
 
     @GetMapping("/buscar/mensaje")
     public List<Notificacion> getByMensaje(@RequestParam String mensaje) throws Exception {
@@ -76,8 +90,6 @@ public class NotificacionController {
         return notificacionService.findByUsuarioDestino(codigoUsuario);
     }
 
-    // ------------------ MARCAR COMO LEÍDO (opcional extra) ------------------
-
     @PatchMapping("/{codigoNotificacion}/leer")
     public Notificacion marcarComoLeido(@PathVariable Long codigoNotificacion) throws Exception {
         Optional<Notificacion> optional = notificacionService.findById(codigoNotificacion);
@@ -89,19 +101,5 @@ public class NotificacionController {
         } else {
             throw new Exception("Notificación no encontrada");
         }
-    }
-
-    @PostMapping
-    public Notificacion createNotificacion(@RequestBody Notificacion notificacion) throws Exception {
-        Notificacion nuevaNotificacion = notificacionService.save(notificacion);
-
-        // Envío automático de notificación por correo
-        notificacionEmailService.enviarNotificacion(
-                notificacion.getNombreUsuarioDestino(), // o correoDestino si ya lo tienes
-                "Nueva Notificación",
-                notificacion.getMensaje()
-        );
-
-        return nuevaNotificacion;
     }
 }

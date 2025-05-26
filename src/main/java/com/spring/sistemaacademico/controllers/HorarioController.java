@@ -42,7 +42,7 @@ public class HorarioController {
             try {
                 return ResponseEntity.ok(horarioService.update(horario));
             } catch (Exception e) {
-                return ResponseEntity.internalServerError().build();
+                return ResponseEntity.internalServerError().body("Error actualizando: " + e.getMessage());
             }
         }).orElse(ResponseEntity.notFound().build());
     }
@@ -52,7 +52,7 @@ public class HorarioController {
         return horarioService.findById(id).map(h -> {
             horarioService.deleteById(id);
             return ResponseEntity.noContent().build();
-        }).orElse(ResponseEntity.notFound().build());
+        }).orElse(ResponseEntity.status(404).body("Horario no encontrado con ID: " + id));
     }
 
     @DeleteMapping
@@ -61,7 +61,7 @@ public class HorarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/modificar")
+    @PatchMapping("/{id}/modificar")
     public ResponseEntity<Horario> modificarHorario(
             @PathVariable Long id,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date nuevaHoraInicio,
@@ -84,7 +84,7 @@ public class HorarioController {
         return ResponseEntity.status(201).body(horarioService.asignarHorario(curso, horaInicio, horaFin, tipoSesion));
     }
 
-    @GetMapping("/disponibilidad")
+    @PostMapping("/verificar-disponibilidad")
     public ResponseEntity<Boolean> verificarDisponibilidad(
             @RequestBody Curso curso,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date horaInicio,

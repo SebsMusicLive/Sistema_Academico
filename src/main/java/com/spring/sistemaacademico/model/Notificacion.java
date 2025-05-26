@@ -19,7 +19,7 @@ public class Notificacion {
     private Long codigoNotificacion;
 
     @Column(nullable = false)
-    private String tipo; // Ej: RECORDATORIO_EVALUACION, ANUNCIO_GENERAL, NOTA_PUBLICADA
+    private String tipo;
 
     @Column(nullable = false)
     private String mensaje;
@@ -31,9 +31,7 @@ public class Notificacion {
 
     private boolean leido = false;
 
-    // Relación con el usuario que recibe la notificación
     @ManyToOne
     @JoinColumn(name = "codigo_usuario", nullable = false)
     private Usuario usuario;
-
 }

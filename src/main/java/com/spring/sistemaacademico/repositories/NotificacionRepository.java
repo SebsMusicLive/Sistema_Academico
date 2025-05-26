@@ -18,5 +18,5 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Long
 
     List<Notificacion> findByLeido(boolean leido);
 
-    List<Notificacion> findByCodigoUsuarioDestino(Long codigoUsuarioDestino);
+    List<Notificacion> findByUsuario_CodigoUsuario(Long codigoUsuario); // CORREGIDO
 }

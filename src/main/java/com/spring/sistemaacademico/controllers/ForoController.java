@@ -37,22 +37,28 @@ public class ForoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Foro> update(@PathVariable Long id, @RequestBody Foro foroActualizado) throws Exception {
-        if (foroService.findById(id).isPresent()) {
+        Optional<Foro> foroExistenteOpt = foroService.findById(id);
+        if (foroExistenteOpt.isPresent()) {
+            Foro foroExistente = foroExistenteOpt.get();
             foroActualizado.setCodigoForo(id);
-            return ResponseEntity.ok(foroService.update(foroActualizado));
+            foroActualizado.setFechaCreacion(foroExistente.getFechaCreacion()); // Conservamos la fecha original
+            Foro foroActualizadoFinal = foroService.update(foroActualizado);
+            return ResponseEntity.ok(foroActualizadoFinal);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
-        if (foroService.findById(id).isPresent()) {
+        Optional<Foro> foroOpt = foroService.findById(id);
+        if (foroOpt.isPresent()) {
             foroService.deleteById(id);
             return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
-
     @DeleteMapping
     public ResponseEntity<Void> deleteAll() throws Exception {
         foroService.deleteAll();
@@ -78,4 +84,3 @@ public class ForoController {
         return foros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(foros);
     }
 }
-

@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.ReservaEspacio;
+import com.spring.sistemaacademico.repositories.ReservaEspacioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.ReservaEspacio;
-import sistemaAcademico.repository.ReservaEspacioRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,10 +26,10 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
 
     @Override
     public ReservaEspacio update(ReservaEspacio reserva) {
-        // Se podría agregar lógica extra si es necesario, como verificar si la reserva existe
         return reservaEspacioRepository.save(reserva);
     }
 
+    @Override
     public Optional<ReservaEspacio> findById(Long id) {
         return reservaEspacioRepository.findById(id);
     }
@@ -44,7 +44,7 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
         reservaEspacioRepository.deleteAll();
     }
 
-    @Override
+
     public List<ReservaEspacio> findByEspacioId(Long codigoEspacio) {
         return reservaEspacioRepository.findByEspacioCodigoEspacio(codigoEspacio);
     }
@@ -54,6 +54,15 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
         List<ReservaEspacio> reservas = findByEspacioId(espacioId);
         return reservas.stream().anyMatch(r ->
                 !r.getFechaInicio().isAfter(fin) && !r.getFechaFin().isBefore(inicio)
+        );
+    }
+
+    public boolean existeTraslapeExcluyendoId(Long espacioId, LocalDateTime inicio, LocalDateTime fin, Long idAExcluir) {
+        List<ReservaEspacio> reservas = findByEspacioId(espacioId);
+        return reservas.stream().anyMatch(r ->
+                !r.getId().equals(idAExcluir) &&
+                        !r.getFechaInicio().isAfter(fin) &&
+                        !r.getFechaFin().isBefore(inicio)
         );
     }
 
@@ -69,9 +78,7 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
 
     @Override
     public List<ReservaEspacio> findByEstado(String estado) {
-        return reservaEspacioRepository.findByEspacioCodigoEspacioAndEstado(null, estado); // si no usas espacio
+        return reservaEspacioRepository.findByEstado(estado);
     }
-
-
-
 }
+

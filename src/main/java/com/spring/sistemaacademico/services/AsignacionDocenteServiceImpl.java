@@ -1,12 +1,14 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.exceptions.CargaExcesivaException;
+import com.spring.sistemaacademico.exceptions.DisponibilidadException;
 import com.spring.sistemaacademico.model.AsignacionDocente;
 import com.spring.sistemaacademico.model.Curso;
 import com.spring.sistemaacademico.model.Docente;
 import com.spring.sistemaacademico.model.Horario;
 import com.spring.sistemaacademico.repositories.AsignacionDocenteRepository;
 import lombok.RequiredArgsConstructor;
-import org.jvnet.hk2.annotations.Service;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -57,11 +59,13 @@ public class AsignacionDocenteServiceImpl implements AsignacionDocenteService {
     public List<AsignacionDocente> findByCargaHoraria(int cargaHoraria) {
         return repository.findByCargaHoraria(cargaHoraria);
     }
+
+    // --- Método para asignar curso a un docente ---
     @Override
-    public void asignarCurso(Docente docente, Curso curso) {
-        if (verificarDisponibilidad(docente, curso.getHorario())) {
-            docente.asignarCurso(curso);
-            ajustarCargaHoraria(docente.getCargaHoraria() + curso.getHoras());
+    public void asignarCurso(Docente docente, Curso curso) throws DisponibilidadException, CargaExcesivaException {
+        if (verificarDisponibilidad(docente, curso.getHorarios().get(0))) {
+            docente.getCursos().add(curso);
+            ajustarCargaHoraria(docente, docente.getCargaHoraria() + curso.getHorasTeoricas() + curso.getHorasPracticas());
         } else {
             throw new DisponibilidadException("El docente no está disponible en el horario del curso.");
         }
@@ -69,11 +73,12 @@ public class AsignacionDocenteServiceImpl implements AsignacionDocenteService {
 
     @Override
     public boolean verificarDisponibilidad(Docente docente, Horario horario) {
-        return docente.getHorariosDisponibles().contains(horario) && docente.getCargaHoraria() < docente.getMaxHoras();
+        return docente.getCargaHoraria() < docente.getMaxHoras();
+        // Puedes mejorar esta lógica si tienes una lista de horarios en el docente
     }
 
     @Override
-    public void ajustarCargaHoraria(Docente docente, int nuevaCarga) {
+    public void ajustarCargaHoraria(Docente docente, int nuevaCarga) throws CargaExcesivaException {
         if (nuevaCarga <= docente.getMaxHoras()) {
             docente.setCargaHoraria(nuevaCarga);
         } else {
@@ -81,4 +86,3 @@ public class AsignacionDocenteServiceImpl implements AsignacionDocenteService {
         }
     }
 }
-

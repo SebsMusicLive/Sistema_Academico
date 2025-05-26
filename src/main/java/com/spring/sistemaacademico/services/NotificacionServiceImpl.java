@@ -1,9 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.Notificacion;
+import com.spring.sistemaacademico.repositories.NotificacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.Notificacion;
-import sistemaAcademico.repository.NotificacionRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class NotificacionServiceImpl implements NotificacionService{
+public class NotificacionServiceImpl implements NotificacionService {
 
     private final NotificacionRepository notificacionRepository;
 
@@ -67,6 +67,21 @@ public class NotificacionServiceImpl implements NotificacionService{
 
     @Override
     public List<Notificacion> findByUsuarioDestino(Long codigoUsuarioDestino) {
-        return notificacionRepository.findByCodigoUsuarioDestino(codigoUsuarioDestino);
+        return notificacionRepository.findByUsuario_CodigoUsuario(codigoUsuarioDestino); // CORREGIDO
+    }
+
+    @Override
+    public void enviarNotificacion() {
+        // implementación opcional
+    }
+
+    @Override
+    public void marcarComoLeida() {
+        // implementación opcional
+    }
+
+    @Override
+    public void programarNotificacionAutomatica() {
+        // implementación opcional
     }
 }

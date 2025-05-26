@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/facultades")
@@ -22,24 +23,32 @@ public class FacultadController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Facultad> findById(@PathVariable Long id) throws Exception {
-        return facultadService.findById(id)
-                .map(ResponseEntity::ok)
+        Optional<Facultad> facultad = facultadService.findById(id);
+        return facultad.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<Facultad> save(@RequestBody Facultad facultad) throws Exception {
-        return ResponseEntity.status(201).body(facultadService.save(facultad));
+        Facultad saved = facultadService.save(facultad);
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Facultad> update(@PathVariable Long id, @RequestBody Facultad facultad) throws Exception {
+        if (facultadService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         facultad.setCodigoFacultad(id);
-        return ResponseEntity.ok(facultadService.update(facultad));
+        Facultad updated = facultadService.update(facultad);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) throws Exception {
+        if (facultadService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         facultadService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
@@ -48,6 +57,43 @@ public class FacultadController {
     public ResponseEntity<List<Facultad>> findByNombre(@PathVariable String nombre) {
         List<Facultad> facultades = facultadService.findByNombre(nombre);
         return facultades.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(facultades);
+    }
+
+    // Agregar una nueva facultad (igual que save pero con método personalizado)
+    @PostMapping("/agregar")
+    public ResponseEntity<Facultad> agregarFacultad(@RequestBody Facultad facultad) throws Exception {
+        Facultad nueva = facultadService.agregarFacultad(facultad);
+        return ResponseEntity.status(201).body(nueva);
+    }
+
+    // Modificar una facultad existente (requiere validación de existencia)
+    @PutMapping("/modificar/{id}")
+    public ResponseEntity<Facultad> modificarFacultad(@PathVariable Long id, @RequestBody Facultad facultad) throws Exception {
+        if (facultadService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        facultad.setCodigoFacultad(id);
+        Facultad modificada = facultadService.modificarFacultad(facultad);
+        return ResponseEntity.ok(modificada);
+    }
+
+    // Eliminar una facultad utilizando método personalizado
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<Void> eliminarFacultad(@PathVariable Long id) throws Exception {
+        if (facultadService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        facultadService.eliminarFacultad(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Asociar un departamento existente a una facultad
+    @PostMapping("/{facultadId}/departamento/{departamentoId}")
+    public ResponseEntity<String> crearDepartamento(
+            @PathVariable Long facultadId,
+            @PathVariable Long departamentoId) throws Exception {
+        facultadService.crearDepartamento(facultadId, departamentoId);
+        return ResponseEntity.ok("Departamento asociado a la facultad correctamente.");
     }
 }
 

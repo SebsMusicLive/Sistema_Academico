@@ -35,6 +35,10 @@ public class MensajeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Mensaje> update(@PathVariable Long id, @RequestBody Mensaje mensaje) throws Exception {
+        Optional<Mensaje> existente = mensajeService.findById(id);
+        if (existente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         mensaje.setCodigoMensaje(id);
         Mensaje actualizado = mensajeService.update(mensaje);
         return ResponseEntity.ok(actualizado);
@@ -42,6 +46,10 @@ public class MensajeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+        Optional<Mensaje> existente = mensajeService.findById(id);
+        if (existente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         mensajeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

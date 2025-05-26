@@ -1,11 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.RecursoAcademico;
+import com.spring.sistemaacademico.repositories.RecursoAcademicoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.RecursoAcademico;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.RecursoAcademicoRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RecursoAcademicoServiceImpl implements RecursoAcademicoService {
 
-    @Autowired
-    private RecursoAcademicoRepository recursoAcademicoRepository;
+    private final RecursoAcademicoRepository recursoAcademicoRepository;
 
     @Override
     public RecursoAcademico save(RecursoAcademico entity) {
@@ -28,17 +25,20 @@ public class RecursoAcademicoServiceImpl implements RecursoAcademicoService {
     }
 
     @Override
-    public Semestre findById(Long id) {
+    public Optional<RecursoAcademico> findById(Long id) {
         return recursoAcademicoRepository.findById(id);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!recursoAcademicoRepository.existsById(id)) {
+            throw new Exception("Recurso no encontrado para eliminar");
+        }
         recursoAcademicoRepository.deleteById(id);
     }
 
     @Override
-    public void deleteAll() throws Exception {
+    public void deleteAll() {
         recursoAcademicoRepository.deleteAll();
     }
 
@@ -80,13 +80,11 @@ public class RecursoAcademicoServiceImpl implements RecursoAcademicoService {
         return recursoAcademicoRepository.save(recurso);
     }
 
-    // Nuevo método: agregarRecurso
     @Override
     public RecursoAcademico agregarRecurso(RecursoAcademico recurso) {
         return recursoAcademicoRepository.save(recurso);
     }
 
-    // Nuevo método: eliminarRecurso
     @Override
     public void eliminarRecurso(Long idRecurso) throws Exception {
         if (!recursoAcademicoRepository.existsById(idRecurso)) {
@@ -95,7 +93,6 @@ public class RecursoAcademicoServiceImpl implements RecursoAcademicoService {
         recursoAcademicoRepository.deleteById(idRecurso);
     }
 
-    // Nuevo método: reservarRecurso
     @Override
     public void reservarRecurso(Long idRecurso) throws Exception {
         RecursoAcademico recurso = recursoAcademicoRepository.findById(idRecurso)
@@ -109,14 +106,12 @@ public class RecursoAcademicoServiceImpl implements RecursoAcademicoService {
         recursoAcademicoRepository.save(recurso);
     }
 
-    // Nuevo método: verificarDisponibilidad
     @Override
     public boolean verificarDisponibilidad(Long idRecurso) {
         Optional<RecursoAcademico> recurso = recursoAcademicoRepository.findById(idRecurso);
         return recurso.map(RecursoAcademico::isDisponible).orElse(false);
     }
 
-    // Nuevo método: gestionarMantenimiento
     @Override
     public void gestionarMantenimiento(Long idRecurso) throws Exception {
         RecursoAcademico recurso = recursoAcademicoRepository.findById(idRecurso)

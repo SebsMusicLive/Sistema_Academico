@@ -1,13 +1,12 @@
 package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.Carrera;
-import com.spring.sistemaacademico.model.Semestre;
 import com.spring.sistemaacademico.repositories.CarreraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +29,9 @@ public class CarreraServiceImpl implements CarreraService {
         return repository.save(carrera);
     }
 
+    // Cambié el tipo de retorno a Optional<Carrera>
     @Override
-    public Semestre findById(Long id) throws Exception {
+    public Optional<Carrera> findById(Long id) throws Exception {
         return repository.findById(id);
     }
 

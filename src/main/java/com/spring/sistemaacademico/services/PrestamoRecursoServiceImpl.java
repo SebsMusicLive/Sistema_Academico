@@ -1,10 +1,9 @@
 package com.spring.sistemaacademico.services;
 
+import com.spring.sistemaacademico.model.PrestamoRecurso;
+import com.spring.sistemaacademico.repositories.PrestamoRecursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sistemaAcademico.model.PrestamoRecurso;
-import sistemaAcademico.model.Semestre;
-import sistemaAcademico.repository.PrestamoRecursoRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -36,12 +35,19 @@ public class PrestamoRecursoServiceImpl implements PrestamoRecursoService {
     }
 
     @Override
-    public Semestre findById(Long id) throws Exception {
-        return prestamoRecursoRepository.findById(id);
+    public Optional<PrestamoRecurso> findById(Long id) throws Exception {
+        Optional<PrestamoRecurso> prestamo = prestamoRecursoRepository.findById(id);
+        if (!prestamo.isPresent()) {
+            throw new Exception("Préstamo con id " + id + " no encontrado");
+        }
+        return prestamo;
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
+        if (!prestamoRecursoRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar: préstamo con id " + id + " no existe");
+        }
         prestamoRecursoRepository.deleteById(id);
     }
 
@@ -60,59 +66,40 @@ public class PrestamoRecursoServiceImpl implements PrestamoRecursoService {
         return prestamoRecursoRepository.findByFechaDevolucion(fechaDevolucion);
     }
 
-    // Registrar un nuevo préstamo
     public PrestamoRecurso registrarPrestamo(PrestamoRecurso prestamo) throws Exception {
         if (prestamo == null) {
             throw new Exception("El préstamo no puede ser nulo");
         }
-        prestamo.setFechaPrestamo(new Date()); // Establece la fecha de préstamo actual
+        prestamo.setFechaPrestamo(new Date()); // Fecha actual
         return prestamoRecursoRepository.save(prestamo);
     }
 
-    // Marcar un recurso como devuelto y actualizar la fecha de devolución
     public PrestamoRecurso devolverRecurso(Long prestamoId) throws Exception {
-        Optional<PrestamoRecurso> prestamoOpt = prestamoRecursoRepository.findById(prestamoId);
-        if (!prestamoOpt.isPresent()) {
-            throw new Exception("Préstamo no encontrado");
-        }
-
-        PrestamoRecurso prestamo = prestamoOpt.get();
-        prestamo.setFechaDevolucion(new Date()); // Establece la fecha de devolución actual
+        PrestamoRecurso prestamo = findById(prestamoId).orElseThrow(() -> new Exception("Préstamo no encontrado"));
+        prestamo.setFechaDevolucion(new Date()); // Fecha devolución actual
         return prestamoRecursoRepository.save(prestamo);
     }
 
-    // Extender el plazo de devolución de un recurso
     public PrestamoRecurso extenderPlazo(Long prestamoId, Date nuevaFechaDevolucion) throws Exception {
-        Optional<PrestamoRecurso> prestamoOpt = prestamoRecursoRepository.findById(prestamoId);
-        if (!prestamoOpt.isPresent()) {
-            throw new Exception("Préstamo no encontrado");
-        }
-
-        PrestamoRecurso prestamo = prestamoOpt.get();
-        prestamo.setFechaDevolucion(nuevaFechaDevolucion); // Establece la nueva fecha de devolución
+        PrestamoRecurso prestamo = findById(prestamoId).orElseThrow(() -> new Exception("Préstamo no encontrado"));
+        prestamo.setFechaDevolucion(nuevaFechaDevolucion);
         return prestamoRecursoRepository.save(prestamo);
     }
 
-    // Generar multa si el recurso no ha sido devuelto en el plazo
     public double generarMulta(Long prestamoId) throws Exception {
-        Optional<PrestamoRecurso> prestamoOpt = prestamoRecursoRepository.findById(prestamoId);
-        if (!prestamoOpt.isPresent()) {
-            throw new Exception("Préstamo no encontrado");
-        }
+        PrestamoRecurso prestamo = findById(prestamoId).orElseThrow(() -> new Exception("Préstamo no encontrado"));
 
-        PrestamoRecurso prestamo = prestamoOpt.get();
         if (prestamo.getFechaDevolucion() == null) {
             throw new Exception("El recurso no ha sido devuelto aún");
         }
 
-        long diferenciaEnMilisegundos = new Date().getTime() - prestamo.getFechaDevolucion().getTime();
-        long diferenciaEnDias = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24);
+        long diffMillis = new Date().getTime() - prestamo.getFechaDevolucion().getTime();
+        long diffDays = diffMillis / (1000 * 60 * 60 * 24);
 
-        if (diferenciaEnDias > 0) {
-            // Se genera una multa por cada día de retraso (por ejemplo, $5 por día)
-            return diferenciaEnDias * 5.0;
+        if (diffDays > 0) {
+            return diffDays * 5.0;  // multa $5 por día
         } else {
-            return 0.0; // No hay multa si el recurso fue devuelto a tiempo
+            return 0.0;
         }
     }
 }
