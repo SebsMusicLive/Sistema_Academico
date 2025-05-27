@@ -52,8 +52,8 @@ public class CalificacionServiceImpl implements CalificacionService {
     }
 
     @Override
-    public List<Calificacion> findByEstudianteId(Long estudianteId) {
-        return repository.findByEstudianteId(estudianteId);
+    public List<Calificacion> findByEstudianteCodigoEstudiante(Long codigoEstudiante) {
+        return repository.findByEstudianteCodigoEstudiante(codigoEstudiante);
     }
 
 }

@@ -1,9 +1,10 @@
 package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.Programa;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface ProgramaService extends CrudService<Programa, Long> {
 
  List<Programa> findByNombre(String nombre);

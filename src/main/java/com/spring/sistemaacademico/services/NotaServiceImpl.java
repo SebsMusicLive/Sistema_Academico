@@ -35,8 +35,8 @@ public class NotaServiceImpl implements NotaService {
     }
 
     @Override
-    public List<Nota> obtenerNotasPorEstudiante(Long idEstudiante) {
-        return notaRepository.findByEstudianteId(idEstudiante);
+    public List<Nota> obtenerNotasPorEstudiante(Long codigoEstudiante) {
+        return notaRepository.findByEstudianteCodigoEstudiante(codigoEstudiante);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class CursoHistorialServiceImpl implements CursoHistorialService {
     }
 
     @Override
-    public List<CursoHistorial> findByCodigoEstudiante(Long codigoEstudiante) {
+    public List<CursoHistorial> findByEstudianteCodigoEstudiante(Long codigoEstudiante) {
         return cursoHistorialRepository.findByHistorialAcademico_Estudiante_CodigoEstudiante(codigoEstudiante);
     }
 }

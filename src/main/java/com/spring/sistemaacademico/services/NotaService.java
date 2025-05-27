@@ -1,10 +1,11 @@
 package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.Nota;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public interface NotaService {
     Nota guardarNota(Nota nota);
     List<Nota> obtenerTodasLasNotas();

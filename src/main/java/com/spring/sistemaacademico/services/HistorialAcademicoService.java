@@ -2,9 +2,10 @@ package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.CursoHistorial;
 import com.spring.sistemaacademico.model.HistorialAcademico;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface HistorialAcademicoService extends CrudService<HistorialAcademico, Long> {
 
     List<HistorialAcademico> findByPromedioGeneral(float promedioGeneral);

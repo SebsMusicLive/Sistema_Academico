@@ -67,9 +67,9 @@ public class CalificacionController {
     }
 
     // Buscar calificaciones por estudiante ID
-    @GetMapping("/estudiante/{estudianteId}")
-    public ResponseEntity<List<Calificacion>> findByEstudianteId(@PathVariable Long estudianteId) {
-        List<Calificacion> calificaciones = calificacionService.findByEstudianteId(estudianteId);
+    @GetMapping("/estudiante/{codigoEstudiante}")
+    public ResponseEntity<List<Calificacion>> findByEstudianteCodigoEstudiante(@PathVariable Long codigoEstudiante) {
+        List<Calificacion> calificaciones = calificacionService.findByEstudianteCodigoEstudiante(codigoEstudiante);
         return calificaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(calificaciones); // 204 si no hay resultados
     }
 }

@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface NotaRepository extends JpaRepository<Nota, Long> {
-    List<Nota> findByEstudianteId(Long idEstudiante);
-    List<Nota> findByEvaluacionId(Long idEvaluacion);
+    List<Nota> findByEstudianteCodigoEstudiante(Long codigoEstudiante);
+    List<Nota> findByEvaluacionId(Long codigoEstudiante);
 }

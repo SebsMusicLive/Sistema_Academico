@@ -1,11 +1,12 @@
 package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.ReservaEspacio;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public interface ReservaEspacioService extends CrudService<ReservaEspacio, Long> {
 
     List<ReservaEspacio> findAll();

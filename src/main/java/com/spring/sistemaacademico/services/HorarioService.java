@@ -2,11 +2,12 @@ package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.Curso;
 import com.spring.sistemaacademico.model.Horario;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public interface HorarioService {
 
     List<Horario> findAll();

@@ -1,11 +1,12 @@
 package com.spring.sistemaacademico.services;
 
 import com.spring.sistemaacademico.model.Mensaje;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public interface MensajeService {
 
     List<Mensaje> findAll() throws Exception;

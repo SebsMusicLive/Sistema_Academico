@@ -3,10 +3,11 @@ package com.spring.sistemaacademico.services;
 import com.spring.sistemaacademico.model.Curso;
 import com.spring.sistemaacademico.model.Estudiante;
 import com.spring.sistemaacademico.model.Horario;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public interface CursoService extends CrudService<Curso, Long> {
 
     List<Curso> findByCodigoCarreraId(Long codigoCarrera);
