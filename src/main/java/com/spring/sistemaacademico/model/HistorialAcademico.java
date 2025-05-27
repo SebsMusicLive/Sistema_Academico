@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,15 +15,15 @@ import java.util.List;
 public class HistorialAcademico {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigoHistorialAcademico;
+
     private float promedioGeneral;
 
-    @ManyToOne(optional = false)
+    @OneToOne
     @JoinColumn(name = "codigo_estudiante", nullable = false)
-    private Estudiante codigoEstudiante;
+    private Estudiante estudiante;
 
     @OneToMany(mappedBy = "historialAcademico")
     private List<CursoHistorial> cursoHistorial;
-
 }

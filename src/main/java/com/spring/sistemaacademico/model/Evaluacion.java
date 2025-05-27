@@ -1,5 +1,6 @@
 package com.spring.sistemaacademico.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +27,7 @@ public class Evaluacion {
     @JoinColumn(name = "codigo_curso", nullable = false)
     private Curso codigoCurso;
 
-    @OneToMany(mappedBy = "codigo_evaluacion")
+    @OneToMany(mappedBy = "evaluacion")
+    @JsonIgnoreProperties("evaluacion")
     private List<Calificacion> calificaciones;
-
-
 }

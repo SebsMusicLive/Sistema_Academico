@@ -14,8 +14,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "curso_historial")
 public class CursoHistorial {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -30,5 +32,5 @@ public class CursoHistorial {
     private HistorialAcademico historialAcademico;
 
     private float calificacionFinal;
-
 }
+
