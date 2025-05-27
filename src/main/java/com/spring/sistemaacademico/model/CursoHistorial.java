@@ -12,8 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 
 @Entity
-
-
+@Table(name = "curso_historial")
 public class CursoHistorial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
