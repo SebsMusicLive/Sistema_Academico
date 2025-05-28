@@ -33,13 +33,9 @@ public class Curso {
     @JoinColumn(name = "codigo_docente", nullable = false)
     private Docente codigoDocente;
 
-    @ManyToMany
-    @JoinTable(
-            name = "curso_carrera", // Nombre de la tabla intermedia
-            joinColumns = @JoinColumn(name="codigoCurso"), // Clave foranea hacia curso
-            inverseJoinColumns = @JoinColumn(name="codigo_carrera") // Clave foranea hacia carrera
-    )
-    private List<Carrera> codigoCarrera;
+    @ManyToOne
+    @JoinColumn(name = "codigo_carrera", nullable = false)
+    private Carrera codigoCarrera;
 
     @ManyToMany
     @JoinTable(

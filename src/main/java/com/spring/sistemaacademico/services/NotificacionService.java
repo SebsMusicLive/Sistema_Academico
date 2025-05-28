@@ -26,4 +26,7 @@ public interface NotificacionService extends CrudService<Notificacion, Long> {
     List<Notificacion> findByLeido(boolean leido);
 
     List<Notificacion> findByUsuarioDestino(Long codigoUsuarioDestino);
+
+    List<Notificacion> findByReceptor_CodigoUsuario(Long codigoUsuario) throws Exception;
+
 }

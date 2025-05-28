@@ -43,8 +43,9 @@ public class CursoHistorialController {
      * Actualiza un curso en historial académico existente
      */
     @PutMapping("/{codigoCursoHistorial}")
-    public CursoHistorial updateCursoHistorial(@PathVariable Long codigoCursoHistorial, @RequestBody CursoHistorial cursoHistorial) throws Exception {
-        cursoHistorial.setId(codigoCursoHistorial); // ← CORREGIDO
+    public CursoHistorial updateCursoHistorial(@PathVariable Long codigoCursoHistorial,
+                                               @RequestBody CursoHistorial cursoHistorial) throws Exception {
+        cursoHistorial.setCodigoCursoHistorial(codigoCursoHistorial); // ← Corregido
         return cursoHistorialService.update(cursoHistorial);
     }
 

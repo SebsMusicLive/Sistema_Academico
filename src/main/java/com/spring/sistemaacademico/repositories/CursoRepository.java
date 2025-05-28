@@ -9,12 +9,12 @@ import java.util.List;
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long> {
 
-    // Buscar cursos por carrera
-    List<Curso> findByCodigoCarrera_Id(Long codigoCarrera);
+    // Buscar cursos por carrera (verifica que Carrera tenga campo "id")
+    List<Curso> findByCodigoCarrera_CodigoCarrera(Long codigoCarrera);
 
-    // Buscar cursos por semestre
-    List<Curso> findByCodigoSemestre_Id(Long codigoSemestre);
+    // ✅ Buscar cursos por semestre (nombre correcto del campo ID)
+    List<Curso> findByCodigoSemestre_CodigoSemestre(Long codigoSemestre);
 
-    // Buscar cursos por docente
+    // Buscar cursos por docente (si Docente tiene campo "codigoDocente")
     List<Curso> findByCodigoDocente_CodigoDocente(Long codigoDocente);
 }

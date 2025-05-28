@@ -13,11 +13,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Foro {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigoForo;
 
     @ManyToOne
@@ -30,9 +29,9 @@ public class Foro {
 
     @ManyToMany
     @JoinTable(
-            name = "foro_usuario", //Nombre de la tabla intermedia
-            joinColumns = @JoinColumn(name = "codigo_foro"), // Clave foranea hacia foro
-            inverseJoinColumns = @JoinColumn(name = "codigo_usuario") // Clave foranea hacia usuario
+            name = "foro_usuario", // Nombre de la tabla intermedia
+            joinColumns = @JoinColumn(name = "codigo_foro"), // FK a foro
+            inverseJoinColumns = @JoinColumn(name = "codigo_usuario") // FK a usuario
     )
-    private List<Usuario> codigoUsuario;
+    private List<Usuario> usuarios;
 }

@@ -18,8 +18,7 @@ public class Carrera {
 
     // Indica que el identificador de la tabla es codigoCarrera
     @Id
-    // Esto indica que el atributo es la clave primaria de la tabla y manejara autoincremento
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codigo_carrera")
     private Long codigoCarrera;
 
 

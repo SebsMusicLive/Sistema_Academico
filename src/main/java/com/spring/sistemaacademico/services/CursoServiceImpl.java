@@ -1,11 +1,6 @@
 package com.spring.sistemaacademico.services;
 
-import com.spring.sistemaacademico.model.Curso;
-import com.spring.sistemaacademico.model.CursoHistorial;
-import com.spring.sistemaacademico.model.EstadoCurso;
-import com.spring.sistemaacademico.model.Estudiante;
-import com.spring.sistemaacademico.model.Horario;
-import com.spring.sistemaacademico.model.Semestre;
+import com.spring.sistemaacademico.model.*;
 import com.spring.sistemaacademico.repositories.CursoHistorialRepository;
 import com.spring.sistemaacademico.repositories.CursoRepository;
 import com.spring.sistemaacademico.repositories.HorarioRepository;
@@ -54,7 +49,7 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     public List<Curso> findByCodigoSemestreId(Long codigoSemestre) {
-        return cursoRepository.findByCodigoSemestre_Id(codigoSemestre);
+        return cursoRepository.findByCodigoSemestre_CodigoSemestre(codigoSemestre); // ✅ CORREGIDO
     }
 
     @Override
@@ -64,7 +59,7 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     public List<Curso> findByCodigoCarreraId(Long codigoCarrera) {
-        return cursoRepository.findByCodigoCarrera_Id(codigoCarrera);
+        return cursoRepository.findByCodigoCarrera_CodigoCarrera(codigoCarrera);
     }
 
     @Override

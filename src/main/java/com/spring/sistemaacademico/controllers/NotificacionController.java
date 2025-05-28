@@ -35,11 +35,12 @@ public class NotificacionController {
     public Notificacion createNotificacion(@RequestBody Notificacion notificacion) throws Exception {
         Notificacion nuevaNotificacion = notificacionService.save(notificacion);
 
-        String correoDestino = notificacion.getUsuario().getCorreo(); // Asegúrate que 'correo' existe en Usuario
+        // Cambiado getUsuario() por getReceptor()
+        String correoDestino = nuevaNotificacion.getReceptor().getCorreo();
         notificacionEmailService.enviarNotificacion(
                 correoDestino,
                 "Nueva Notificación",
-                notificacion.getMensaje()
+                nuevaNotificacion.getMensaje()
         );
 
         return nuevaNotificacion;
@@ -87,7 +88,8 @@ public class NotificacionController {
 
     @GetMapping("/usuario/{codigoUsuario}")
     public List<Notificacion> getByUsuarioDestino(@PathVariable Long codigoUsuario) throws Exception {
-        return notificacionService.findByUsuarioDestino(codigoUsuario);
+        // Asegúrate de que tu servicio implemente findByReceptor_CodigoUsuario
+        return notificacionService.findByReceptor_CodigoUsuario(codigoUsuario);
     }
 
     @PatchMapping("/{codigoNotificacion}/leer")

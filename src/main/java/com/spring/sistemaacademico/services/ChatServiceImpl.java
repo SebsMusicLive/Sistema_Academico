@@ -58,7 +58,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<Chat> obtenerChatsPorUsuario(Long usuarioId) {
-        return chatRepository.findByCodigoUsuario1IdOrCodigoUsuario2Id(usuarioId, usuarioId);
+        return chatRepository.findByUsuarioParticipante(usuarioId);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<Chat> findChatsByUsuarioId(Long usuarioId) throws Exception {
-        return chatRepository.findByCodigoUsuario1IdOrCodigoUsuario2Id(usuarioId, usuarioId);
+        return chatRepository.findByUsuarioParticipante(usuarioId);
     }
 
     @Override

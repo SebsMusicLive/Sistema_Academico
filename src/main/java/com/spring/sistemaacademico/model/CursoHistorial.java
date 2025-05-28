@@ -1,10 +1,7 @@
 package com.spring.sistemaacademico.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -17,10 +14,14 @@ public class CursoHistorial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    @Column(name = "codigo_curso_historial", nullable = false)
+    private Long codigoCursoHistorial;
+
+    @Column(name = "calificacion_final", nullable = false)
+    private float calificacionFinal;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "estado_curso")
     private EstadoCurso estadoCurso;
 
     @ManyToOne
@@ -30,7 +31,4 @@ public class CursoHistorial {
     @ManyToOne
     @JoinColumn(name = "codigo_historial_academico", nullable = false)
     private HistorialAcademico historialAcademico;
-
-    private float calificacionFinal;
 }
-

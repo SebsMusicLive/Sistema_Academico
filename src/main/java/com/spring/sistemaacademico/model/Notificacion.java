@@ -16,6 +16,7 @@ public class Notificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codigo_notificacion")
     private Long codigoNotificacion;
 
     @Column(nullable = false)
@@ -24,14 +25,22 @@ public class Notificacion {
     @Column(nullable = false)
     private String mensaje;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_envio", nullable = false)
     private LocalDateTime fechaEnvio;
 
+    @Column(name = "fecha_lectura")
     private LocalDateTime fechaLectura;
 
+    @Column(nullable = false)
     private boolean leido = false;
 
-    @ManyToOne
-    @JoinColumn(name = "codigo_usuario", nullable = false)
-    private Usuario usuario;
+    // Emisor de la notificación
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "codigo_emisor", nullable = false)
+    private Usuario emisor;
+
+    // Receptor de la notificación
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "codigo_receptor", nullable = false)
+    private Usuario receptor;
 }

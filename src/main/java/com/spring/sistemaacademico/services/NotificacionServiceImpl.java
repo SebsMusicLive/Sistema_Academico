@@ -84,4 +84,9 @@ public class NotificacionServiceImpl implements NotificacionService {
     public void programarNotificacionAutomatica() {
         // implementación opcional
     }
+
+    @Override
+    public List<Notificacion> findByReceptor_CodigoUsuario(Long codigoUsuario) throws Exception {
+        return notificacionRepository.findByReceptor_CodigoUsuario(codigoUsuario);
+    }
 }
