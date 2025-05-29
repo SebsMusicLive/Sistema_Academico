@@ -1,43 +1,15 @@
 package com.spring.sistemaacademico.services;
 
-import com.spring.sistemaacademico.model.ReservaEspacio;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-@Service
-public interface ReservaEspacioService extends CrudService<ReservaEspacio, Long> {
 
+import com.spring.sistemaacademico.model.ReservaEspacio;
+
+public interface ReservaEspacioService {
     List<ReservaEspacio> findAll();
+    ReservaEspacio findById(Long id);
+    ReservaEspacio save(ReservaEspacio reservaEspacio);
+    void delete(Long id);
 
-    ReservaEspacio save(ReservaEspacio reserva);
-
-    ReservaEspacio update(ReservaEspacio reserva);
-
-    Optional<ReservaEspacio> findById(Long id);
-
-    void deleteById(Long id);
-
-    void deleteAll();
-
-    /**
-     * Retorna todas las reservas asociadas a un código de espacio
-     */
-    List<ReservaEspacio> findByEspacioCodigoEspacio(Long codigoEspacio);
-
-    /**
-     * Verifica si hay traslape en una franja horaria con reservas existentes
-     */
-    boolean existeTraslape(Long espacioId, LocalDateTime inicio, LocalDateTime fin);
-
-    /**
-     * Retorna las reservas hechas por un usuario
-     */
-    List<ReservaEspacio> findByUsuario(Long codigoUsuario);
-
-    /**
-     * Retorna las reservas por estado: "pendiente", "aprobada", etc.
-     */
-    List<ReservaEspacio> findByEstado(String estado);
+    // Solo la versión correcta:
+    List<ReservaEspacio> findByUsuarioCodigoUsuario(Long codigoUsuario);
 }

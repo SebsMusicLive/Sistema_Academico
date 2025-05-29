@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,12 +33,10 @@ public class Notificacion {
     @Column(nullable = false)
     private boolean leido = false;
 
-    // Emisor de la notificación
     @ManyToOne(optional = false)
     @JoinColumn(name = "codigo_emisor", nullable = false)
     private Usuario emisor;
 
-    // Receptor de la notificación
     @ManyToOne(optional = false)
     @JoinColumn(name = "codigo_receptor", nullable = false)
     private Usuario receptor;

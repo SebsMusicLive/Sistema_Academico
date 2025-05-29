@@ -27,7 +27,7 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
     @Override
     public Evaluacion update(Evaluacion evaluacion) throws Exception {
-        if (evaluacion.getCodigo_evaluacion() == null || !repository.existsById(evaluacion.getCodigo_evaluacion())) {
+        if (evaluacion.getCodigoEvaluacion() == null || !repository.existsById(evaluacion.getCodigoEvaluacion())) {
             throw new Exception("Evaluación no encontrada");
         }
         return repository.save(evaluacion);

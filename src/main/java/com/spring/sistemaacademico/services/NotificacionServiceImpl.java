@@ -16,32 +16,32 @@ public class NotificacionServiceImpl implements NotificacionService {
     private final NotificacionRepository notificacionRepository;
 
     @Override
-    public List<Notificacion> findAll() throws Exception {
+    public List<Notificacion> findAll() {
         return notificacionRepository.findAll();
     }
 
     @Override
-    public Optional<Notificacion> findById(Long id) throws Exception {
+    public Optional<Notificacion> findById(Long id) {
         return notificacionRepository.findById(id);
     }
 
     @Override
-    public Notificacion save(Notificacion notificacion) throws Exception {
+    public Notificacion save(Notificacion notificacion) {
         return notificacionRepository.save(notificacion);
     }
 
     @Override
-    public Notificacion update(Notificacion notificacion) throws Exception {
+    public Notificacion update(Notificacion notificacion) {
         return notificacionRepository.save(notificacion);
     }
 
     @Override
-    public void deleteById(Long id) throws Exception {
+    public void deleteById(Long id) {
         notificacionRepository.deleteById(id);
     }
 
     @Override
-    public void deleteAll() throws Exception {
+    public void deleteAll() {
         notificacionRepository.deleteAll();
     }
 
@@ -66,8 +66,13 @@ public class NotificacionServiceImpl implements NotificacionService {
     }
 
     @Override
-    public List<Notificacion> findByUsuarioDestino(Long codigoUsuarioDestino) {
-        return notificacionRepository.findByUsuario_CodigoUsuario(codigoUsuarioDestino); // CORREGIDO
+    public List<Notificacion> findByReceptor(Long codigoUsuario) {
+        return notificacionRepository.findByReceptor_CodigoUsuario(codigoUsuario);
+    }
+
+    @Override
+    public void programarNotificacionAutomatica() {
+        // implementación opcional
     }
 
     @Override
@@ -78,15 +83,5 @@ public class NotificacionServiceImpl implements NotificacionService {
     @Override
     public void marcarComoLeida() {
         // implementación opcional
-    }
-
-    @Override
-    public void programarNotificacionAutomatica() {
-        // implementación opcional
-    }
-
-    @Override
-    public List<Notificacion> findByReceptor_CodigoUsuario(Long codigoUsuario) throws Exception {
-        return notificacionRepository.findByReceptor_CodigoUsuario(codigoUsuario);
     }
 }

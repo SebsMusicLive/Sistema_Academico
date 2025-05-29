@@ -1,17 +1,19 @@
 package com.spring.sistemaacademico.repositories;
 
-import com.spring.sistemaacademico.model.ReservaEspacio;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.spring.sistemaacademico.model.ReservaEspacio;
+
 @Repository
 public interface ReservaEspacioRepository extends JpaRepository<ReservaEspacio, Long> {
-    List<ReservaEspacio> findByEspacioCodigoEspacio(Long codigoEspacio);
+
+    // Línea problemática eliminada:
+    // List<ReservaEspacio> findByUsuario(Long codigoUsuario);
+
+    // Correcto: buscar por el códigoUsuario que está dentro de usuario (entidad)
     List<ReservaEspacio> findByUsuarioCodigoUsuario(Long codigoUsuario);
-    List<ReservaEspacio> findByEspacioCodigoEspacioAndEstado(Long codigoEspacio, String estado);
-    List<ReservaEspacio> findByEstado(String estado);// Para listar todas las "pendientes", por ejemplo
-    List<ReservaEspacio> findByUsuario(Long codigoUsuario); // <-- si usas este también
 
 }
