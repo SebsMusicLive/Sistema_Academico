@@ -29,7 +29,7 @@ public class AuthController {
 
         if ("1152196".equals(loginRequest.getCodigo()) &&
                 "1005028827".equals(loginRequest.getDocumento()) &&
-                "Johansebas134625@".equals(loginRequest.getContrasena())) {
+                "12345".equals(loginRequest.getContrasena())) {
             return ResponseEntity.ok().body(Map.of(
                     "message", "¡Inicio de sesión exitoso para " + loginRequest.getCodigo() + "!",
                     "token", "este-es-un-token-dummy-para-" + loginRequest.getCodigo()
