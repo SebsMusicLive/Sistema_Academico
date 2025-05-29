@@ -135,4 +135,4 @@ git clone https://github.com/SebsMusicLive/Sistema_Academico.git
 Este proyecto está bajo la licencia MIT.
 
 📅 Cronograma de Actividades
-🔗 Ver Cronograma en Google Sheets
+🔗 [Ver Cronograma en Google Sheets](https://docs.google.com/spreadsheets/d/1Na84YfwvMOs03YQNCtL16cIsvZBUrKN0/edit?gid=504086334#gid=504086334)
