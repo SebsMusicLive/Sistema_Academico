@@ -74,31 +74,31 @@ Está diseñado aplicando buenas prácticas de **arquitectura por capas** y prin
 
 ## 📁 Estructura del Proyecto
 
+```plaintext
 Sistema_Academico-main/
-│
-├── .mvn/                    # Configuración del wrapper de Maven
+├── .mvn/                         # Configuración del wrapper de Maven
 │   └── wrapper/
 │       └── maven-wrapper.properties
 │
-├── frontend/                # Proyecto frontend (estructura vacía por ahora)
+├── frontend/                     # Proyecto frontend (estructura vacía por ahora)
 │   └── frontend_system_academic/
+│       └── src/
+│           └── main/
+│               ├── java/        # Código fuente Java
+│               │   └── com/     # Paquete base (organización del sistema)
+│               └── resources/   # Archivos de configuración
+│                   └── application.properties
 │
-├── src/
-│   ├── main/
-│   │   ├── java/            # Código fuente Java
-│   │   │   └── com/         # Paquete base (organización del sistema)
-│   │   └── resources/       # Archivos de configuración
-│   │       └── application.properties
-│   │
-│   └── test/
-│       └── java/            # Pruebas unitarias
-│           └── com/
+├── test/
+│   └── java/                     # Pruebas unitarias
+│       └── com/
 │
 ├── .gitignore
 ├── README.md
-├── pom.xml                 # Archivo de configuración de dependencias Maven
-├── mvnw                    # Script para ejecutar Maven (Linux/Mac)
-└── mvnw.cmd                # Script para ejecutar Maven (Windows)
+├── pom.xml                       # Archivo de configuración de dependencias Maven
+├── mvnw                          # Script para ejecutar Maven (Linux/Mac)
+└── mvnw.cmd                      # Script para ejecutar Maven (Windows)
+
 
 La separación entre service/ y serviceImpl/ en el código sigue el principio de inversión de dependencias, lo que facilita las pruebas, mantenimiento y desacoplamiento.
 
