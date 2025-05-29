@@ -1,5 +1,6 @@
-package com.spring.sistemaacademico.config; // Asegúrate que el paquete sea el correcto
+package com.spring.sistemaacademico.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,21 +15,32 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                                .ignoringRequestMatchers("/api/**") // Deshabilita CSRF para tus APIs (común para APIs stateless)
-                        // Si tu login es tradicional (no JWT), podrías necesitar CSRF.
-                        // Por ahora, para simplificar, lo desactivamos para /api/.
+                        .ignoringRequestMatchers("/api/**")
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/login").permitAll() // Permite acceso a /api/auth/login sin autenticación
-                        .requestMatchers("/api/public/**").permitAll() // Ejemplo: si tienes otros endpoints públicos
-                        .anyRequest().authenticated() // Cualquier otra petición requiere autenticación
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                // Si vas a manejar tu propio login y no usar el formLogin de Spring Security para esta API:
-                .formLogin(formLogin -> formLogin.disable()) // Deshabilita el formLogin por defecto si manejas login vía API
-                .httpBasic(httpBasic -> httpBasic.disable()); // Deshabilita HTTP Basic si no lo usas
+                .formLogin(formLogin -> formLogin.disable())
+                .httpBasic(httpBasic -> httpBasic.disable())
 
-        // Para APIs stateless (común con JWT), usualmente se configura así:
-        // http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                // --- AÑADIR CONFIGURACIÓN DE LOGOUT AQUÍ ---
+                .logout(logout -> logout
+                        .logoutUrl("/api/auth/logout") // Define la URL para el logout (puede ser POST por defecto)
+                        // Si quieres que el logout funcione con GET (más simple para enlaces, pero POST es más seguro semánticamente)
+                        // .logoutRequestMatcher(new AntPathRequestMatcher("/api/auth/logout", "GET"))
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            // Puedes enviar una respuesta JSON personalizada si lo deseas
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.setContentType("application/json");
+                            response.getWriter().append("{\"message\": \"Logout exitoso desde el backend\"}");
+                            response.getWriter().flush();
+                        })
+                        .invalidateHttpSession(true) // Invalida la sesión HTTP (importante)
+                        .deleteCookies("JSESSIONID") // Opcional: elimina cookies de sesión si se usan
+                        .permitAll() // Permite a todos acceder al endpoint de logout
+                );
 
         return http.build();
     }
