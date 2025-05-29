@@ -17,7 +17,7 @@ public class Evaluacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo_evaluacion;
+    private Long codigoEvaluacion; // CAMBIO: nombre coherente con query
 
     private String tipo;
     private float ponderacion;

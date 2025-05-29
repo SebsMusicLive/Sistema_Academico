@@ -75,7 +75,7 @@ public class MensajeServiceImpl implements MensajeService {
 
     @Override
     public List<Mensaje> recibirMensajes(Long idReceptor) throws Exception {
-        List<Mensaje> mensajes = mensajeRepository.findByReceptorId(idReceptor);
+        List<Mensaje> mensajes = mensajeRepository.findByReceptorCodigoUsuario(idReceptor);
         for (Mensaje m : mensajes) {
             if (!m.isLeido()) {
                 m.setLeido(true);
@@ -102,11 +102,16 @@ public class MensajeServiceImpl implements MensajeService {
 
     @Override
     public List<Mensaje> findByEmisorId(Long emisorId) throws Exception {
-        return mensajeRepository.findByEmisorId(emisorId);
+        return mensajeRepository.findByEmisorCodigoUsuario(emisorId);
     }
 
     @Override
     public List<Mensaje> obtenerMensajesPorChat(Long chatId) throws Exception {
         return mensajeRepository.findByChatCodigoChat(chatId);
+    }
+
+    @Override
+    public List<Mensaje> obtenerNoLeidosPorReceptor(Long receptorId) throws Exception {
+        return mensajeRepository.findByLeidoFalseAndReceptorCodigoUsuario(receptorId);
     }
 }

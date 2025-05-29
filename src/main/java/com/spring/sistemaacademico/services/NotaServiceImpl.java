@@ -41,6 +41,6 @@ public class NotaServiceImpl implements NotaService {
 
     @Override
     public List<Nota> obtenerNotasPorEvaluacion(Long idEvaluacion) {
-        return notaRepository.findByEvaluacionId(idEvaluacion);
+        return notaRepository.findByEvaluacionCodigoEvaluacion(idEvaluacion); // CORREGIDO
     }
 }

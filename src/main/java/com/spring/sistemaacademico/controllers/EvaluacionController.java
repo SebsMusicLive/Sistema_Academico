@@ -41,7 +41,7 @@ public class EvaluacionController {
     public ResponseEntity<Evaluacion> update(@PathVariable Long id, @RequestBody Evaluacion evaluacionActualizada) throws Exception {
         Optional<Evaluacion> existente = evaluacionService.findById(id);
         if (existente.isPresent()) {
-            evaluacionActualizada.setCodigo_evaluacion(id);
+            evaluacionActualizada.setCodigoEvaluacion(id); // cambio de setter aquí
             return ResponseEntity.ok(evaluacionService.update(evaluacionActualizada));
         }
         return ResponseEntity.notFound().build();

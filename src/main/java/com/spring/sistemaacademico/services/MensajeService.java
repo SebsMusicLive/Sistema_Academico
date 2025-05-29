@@ -34,4 +34,6 @@ public interface MensajeService {
     List<Mensaje> findByEmisorId(Long emisorId) throws Exception;
 
     List<Mensaje> obtenerMensajesPorChat(Long chatId) throws Exception;
+
+    List<Mensaje> obtenerNoLeidosPorReceptor(Long receptorId) throws Exception;
 }

@@ -79,4 +79,10 @@ public class MensajeController {
     public ResponseEntity<List<Mensaje>> recibirMensajes(@PathVariable Long idReceptor) throws Exception {
         return ResponseEntity.ok(mensajeService.recibirMensajes(idReceptor));
     }
+
+    @GetMapping("/no-leidos/{idReceptor}")
+    public ResponseEntity<List<Mensaje>> obtenerNoLeidos(@PathVariable Long idReceptor) throws Exception {
+        return ResponseEntity.ok(mensajeService.obtenerNoLeidosPorReceptor(idReceptor));
+    }
+
 }

@@ -14,11 +14,11 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
 
     List<Mensaje> findByFechaEnvio(Date fechaEnvio);
 
-    List<Mensaje> findByEmisorId(Long emisorId);
+    List<Mensaje> findByEmisorCodigoUsuario(Long emisorId); // ← CORREGIDO
 
-    List<Mensaje> findByReceptorId(Long receptorId);
+    List<Mensaje> findByReceptorCodigoUsuario(Long receptorId); // ← CORREGIDO
 
-    List<Mensaje> findByChatCodigoChat(Long chatId);
+    List<Mensaje> findByChatCodigoChat(Long chatId); // Esto está bien si Chat tiene 'codigoChat' como PK
 
-    List<Mensaje> findByLeidoFalseAndReceptorId(Long receptorId);
+    List<Mensaje> findByLeidoFalseAndReceptorCodigoUsuario(Long receptorId); // ← CORREGIDO
 }
