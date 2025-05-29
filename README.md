@@ -98,6 +98,7 @@ Sistema_Academico-main/
 ├── pom.xml                       # Archivo de configuración de dependencias Maven
 ├── mvnw                          # Script para ejecutar Maven (Linux/Mac)
 └── mvnw.cmd                      # Script para ejecutar Maven (Windows)
+```
 
 
 La separación entre service/ y serviceImpl/ en el código sigue el principio de inversión de dependencias, lo que facilita las pruebas, mantenimiento y desacoplamiento.
