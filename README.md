@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 📚 Sistema Académico - Spring Boot
 
 Este proyecto es un sistema académico desarrollado con Java y Spring Boot como parte de la evaluación del **tercer corte** de la asignatura **Programación Web**. Su propósito es simular la gestión académica de una institución educativa, permitiendo la administración de estudiantes, docentes, cursos, evaluaciones, comunicaciones, entre otros aspectos clave.
@@ -18,58 +17,45 @@ Está diseñado aplicando buenas prácticas de **arquitectura por capas** y prin
 
 ## 🧩 Módulos Funcionales
 
-### 🎓 Gestión de Estudiantes *(Responsable: Sebas)*
+### 🎓 Gestión de Estudiantes *(Responsable: Sebastian Lopez)*
 
-- **Registro y Actualización:** Alta, modificación y eliminación de información personal y académica de estudiantes.
-- **Matrícula e Inscripción:** Gestión de matrículas e inscripción a cursos, con verificación de requisitos.
-- **Gestión de Asistencia:** Registro de asistencia y generación de reportes de inasistencia.
-- **Historial Académico:** Consulta del rendimiento académico y cursos aprobados.
+- Registro, modificación y eliminación de estudiantes.
+- Matrícula e inscripción con verificación de requisitos.
+- Control de asistencia y reportes.
+- Consulta de historial académico.
 
----
+### 👨‍🏫 Gestión de Docentes *(Responsable: Jesus Chinchilla)*
 
-### 👨‍🏫 Gestión de Docentes *(Responsable: Chinchilla)*
+- Registro y mantenimiento de datos docentes.
+- Asignación de cursos según disponibilidad.
+- Gestión de evaluaciones.
 
-- **Registro y Actualización:** Alta, modificación y eliminación de datos de docentes.
-- **Asignación de Cursos:** Asignación de cursos a docentes según disponibilidad.
-- **Evaluaciones:** Creación y registro de evaluaciones, exámenes, y actividades académicas.
+### 📘 Gestión de Cursos y Asignaturas *(Responsable: Juan Arguello)*
 
----
+- Creación y edición de cursos.
+- Programación de horarios sin solapamientos.
+- Inscripción y cancelación de materias.
 
-### 📘 Gestión de Cursos y Asignaturas *(Responsable: Arguello)*
+### 📝 Evaluación y Calificaciones *(Responsable: Jonathan Guevara)*
 
-- **Creación y Administración:** Diseño y modificación de cursos, objetivos y contenidos.
-- **Programación de Horarios:** Organización de horarios evitando solapamientos.
-- **Inscripción y Cancelación:** Inscripción/cancelación en cursos con validación de cupos y prerrequisitos.
-
----
-
-### 📝 Evaluación y Calificaciones *(Responsable: Jonathan)*
-
-- **Registro de Calificaciones:** Ingreso y modificación de notas.
-- **Promedios y Estadísticas:** Cálculo de promedios y reportes de desempeño.
-- **Retroalimentación:** Comunicación de resultados entre docentes y estudiantes.
-
----
+- Registro y modificación de notas.
+- Promedios, estadísticas y retroalimentación académica.
 
 ### 💬 Comunicación y Notificaciones *(Responsable: Jesus Chinchilla)*
 
-- **Mensajería Interna:** Comunicación entre estudiantes, docentes y administrativos.
-- **Alertas y Recordatorios:** Notificaciones automáticas por email o push.
-
----
+- Mensajería interna entre usuarios del sistema.
+- Alertas y recordatorios automáticos.
 
 ### 🧑‍🔬 Recursos Académicos *(Responsable: Juan Arguello)*
 
-- **Reserva de Aulas y Laboratorios:** Asignación y reserva de espacios físicos y virtuales.
-- **Gestión de Materiales:** Préstamo y mantenimiento de libros y equipos.
+- Reserva de aulas y laboratorios.
+- Gestión de materiales, libros y equipos.
 
----
+### 🛡️ Módulo Administrativo y Seguridad *(Responsables: Jonathan Guevara, Sebastian López)*
 
-### 🛡️ Módulo Administrativo y Seguridad *(Responsables: Jonathan Colmenares, Johan López)*
-
-- **Roles y Permisos:** Asignación de roles (docente, estudiante, admin) y niveles de acceso.
-- **Autenticación y Autorización:** Inicio de sesión seguro con Spring Security.
-- **Testing y Corrección:** Pruebas unitarias e integración para garantizar la calidad.
+- Gestión de roles y permisos.
+- Autenticación y autorización con Spring Security.
+- Pruebas unitarias e integración.
 
 ---
 
@@ -88,156 +74,36 @@ Está diseñado aplicando buenas prácticas de **arquitectura por capas** y prin
 
 ## 📁 Estructura del Proyecto
 
-```
-=======
-📚 Sistema Académico - Spring Boot
-Este proyecto es un sistema académico desarrollado con Java y Spring Boot como parte de la evaluación del tercer corte de la asignatura Programación Web. Su propósito es simular la gestión académica de una institución educativa, permitiendo la administración de estudiantes, docentes, cursos, evaluaciones, comunicaciones, entre otros aspectos clave.
+Sistema_Academico-main/
+│
+├── .mvn/                    # Configuración del wrapper de Maven
+│   └── wrapper/
+│       └── maven-wrapper.properties
+│
+├── frontend/                # Proyecto frontend (estructura vacía por ahora)
+│   └── frontend_system_academic/
+│
+├── src/
+│   ├── main/
+│   │   ├── java/            # Código fuente Java
+│   │   │   └── com/         # Paquete base (organización del sistema)
+│   │   └── resources/       # Archivos de configuración
+│   │       └── application.properties
+│   │
+│   └── test/
+│       └── java/            # Pruebas unitarias
+│           └── com/
+│
+├── .gitignore
+├── README.md
+├── pom.xml                 # Archivo de configuración de dependencias Maven
+├── mvnw                    # Script para ejecutar Maven (Linux/Mac)
+└── mvnw.cmd                # Script para ejecutar Maven (Windows)
 
-Está diseñado aplicando buenas prácticas de arquitectura por capas y principios de diseño limpio, bajo la guía del profesor Jonathan Rolando.
-
-🚀 Características Principales
-Gestión completa de estudiantes, docentes, cursos y calificaciones.
-
-API RESTful organizada por módulos funcionales.
-
-Arquitectura basada en servicios (Service, Repository, Controller, Model).
-
-Persistencia con Spring Data JPA.
-
-🧩 Módulos Funcionales
-🎓 Gestión de Estudiantes (Responsable: Sebas)
-Registro y Actualización: Alta, modificación y eliminación de información personal y académica de estudiantes.
-
-Matrícula e Inscripción: Gestión de matrículas e inscripción a cursos, con verificación de requisitos.
-
-Gestión de Asistencia: Registro de asistencia y generación de reportes de inasistencia.
-
-Historial Académico: Consulta del rendimiento académico y cursos aprobados.
-
-👨‍🏫 Gestión de Docentes (Responsable: Chinchilla)
-Registro y Actualización: Alta, modificación y eliminación de datos de docentes.
-
-Asignación de Cursos: Asignación de cursos a docentes según disponibilidad.
-
-Evaluaciones: Creación y registro de evaluaciones, exámenes, y actividades académicas.
-
-📘 Gestión de Cursos y Asignaturas (Responsable: Arguello)
-Creación y Administración: Diseño y modificación de cursos, objetivos y contenidos.
-
-Programación de Horarios: Organización de horarios evitando solapamientos.
-
-Inscripción y Cancelación: Inscripción/cancelación en cursos con validación de cupos y prerrequisitos.
-
-📝 Evaluación y Calificaciones (Responsable: Jonathan)
-Registro de Calificaciones: Ingreso y modificación de notas.
-
-Promedios y Estadísticas: Cálculo de promedios y reportes de desempeño.
-
-Retroalimentación: Comunicación de resultados entre docentes y estudiantes.
-
-💬 Comunicación y Notificaciones (Responsable: Jesus Chinchilla)
-Mensajería Interna: Comunicación entre estudiantes, docentes y administrativos.
-
-Alertas y Recordatorios: Notificaciones automáticas por email o push.
-
-🧑‍🔬 Recursos Académicos (Responsable: Juan Arguello)
-Reserva de Aulas y Laboratorios: Asignación y reserva de espacios físicos y virtuales.
-
-Gestión de Materiales: Préstamo y mantenimiento de libros y equipos.
-
-🛡️ Módulo Administrativo y Seguridad (Responsables: Jonathan Colmenares, Johan López)
-Roles y Permisos: Asignación de roles (docente, estudiante, admin) y niveles de acceso.
-
-Autenticación y Autorización: Inicio de sesión seguro con Spring Security.
-
-Testing y Corrección: Pruebas unitarias e integración para garantizar la calidad.
-
-🛠️ Tecnologías Utilizadas
-Java 24+
-
-Spring Boot 3.x
-
-Spring Data JPA
-
-Spring Web
-
-Spring Security
-
-Lombok
-
-H2 / MySQL / PostgreSQL
-
-Maven
-
-📁 Estructura del Proyecto
-bash
-Copiar
-Editar
->>>>>>> e85e937d8ec002645ba528107979f16822105b63
-src/
-└── main/
-    ├── java/
-    │   └── sistemaAcademico/
-    │       ├── controllers/      # Controladores REST
-    │       ├── model/            # Entidades (JPA)
-    │       ├── repository/       # Repositorios (JpaRepository)
-    │       ├── service/          # Interfaces de servicios
-    │       └── serviceImpl/      # Implementaciones de los servicios
-    └── resources/                # Configuración (application.properties, etc.)
-<<<<<<< HEAD
-```
-
-> La separación entre `service/` y `serviceImpl/` sigue el principio de inversión de dependencias, facilitando pruebas, mantenimiento y desacoplamiento.
-
----
-
-## 📦 Dependencias (pom.xml)
-
-### 🔧 Dependencias Principales
-
-- `spring-boot-starter-web` – Construcción de APIs REST.
-- `spring-boot-starter-data-jpa` – Persistencia con JPA/Hibernate.
-- `spring-boot-starter-security` – Autenticación y autorización.
-- `spring-boot-devtools` – Recarga automática durante desarrollo.
-- `lombok` – Reducción de boilerplate.
-- `postgresql` / `mysql-connector-java` – Drivers de conexión a BD.
-- `spring-boot-starter-actuator` – Monitoreo y métricas.
-
----
-
-## 👥 Contribuidores
-
-| Nombre              | Correo                             | GitHub                                      |
-|---------------------|------------------------------------|---------------------------------------------|
-| Juan Arguello       | juandavidaa@ufps.edu.co            | [Arguellis17](https://github.com/Arguellis17) |
-| Jonathan Guevara    | jonathangc@ufps.edu.co             | [JonathanGuevaraC](https://github.com/JonathanGuevaraC) |
-| Jesus Chinchilla    | jesusdavidcm@ufps.edu.co           | [JesusDavidChinchillaMachuca](https://github.com/JesusDavidChinchillaMachuca) |
-| Sebastian Lopez     | johansebastianlo@ufps.edu.co       | [SebsMusicLive](https://github.com/SebsMusicLive) |
-
----
-
-## 🚀 Clonar el Proyecto
-
-```bash
-git clone https://github.com/SebsMusicLive/Sistema_Academico.git
-```
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia **MIT**.
-
----
-
-## 📅 Cronograma de Actividades
-
-🔗 [Ver Cronograma en Google Sheets](https://docs.google.com/spreadsheets/d/1Na84YfwvMOs03YQNCtL16cIsvZBUrKN0/edit?gid=504086334#gid=504086334)
-=======
-La separación entre service/ y serviceImpl/ sigue el principio de inversión de dependencias, facilitando pruebas, mantenimiento y desacoplamiento.
+La separación entre service/ y serviceImpl/ en el código sigue el principio de inversión de dependencias, lo que facilita las pruebas, mantenimiento y desacoplamiento.
 
 📦 Dependencias (pom.xml)
-🔧 Dependencias Principales
+🔧 Principales
 spring-boot-starter-web – Construcción de APIs REST.
 
 spring-boot-starter-data-jpa – Persistencia con JPA/Hibernate.
@@ -246,27 +112,27 @@ spring-boot-starter-security – Autenticación y autorización.
 
 spring-boot-devtools – Recarga automática durante desarrollo.
 
-lombok – Reducción de boilerplate.
+lombok – Reducción de código repetitivo.
 
-postgresql / mysql-connector-java – Drivers de conexión a BD.
+mysql-connector-java / postgresql – Drivers de conexión a BD.
 
-spring-boot-starter-actuator – Monitoreo y métricas.
+spring-boot-starter-actuator – Monitoreo y métricas del sistema.
 
 👥 Contribuidores
-Nombre	Correo	GitHub
-Juan Arguello	juandavidaa@ufps.edu.co	Arguellis17
-Jonathan Guevara	jonathangc@ufps.edu.co	JonathanGuevaraC
-Jesus Chinchilla	jesusdavidcm@ufps.edu.co	JesusDavidChinchillaMachuca
-Sebastian Lopez	johansebastianlo@ufps.edu.co	SebsMusicLive
+
+| Nombre              | Correo                             | GitHub                                      |
+|---------------------|------------------------------------|---------------------------------------------|
+| Juan Arguello       | juandavidaa@ufps.edu.co            | [Arguellis17](https://github.com/Arguellis17) |
+| Jonathan Guevara    | jonathangc@ufps.edu.co             | [JonathanGuevaraC](https://github.com/JonathanGuevaraC) |
+| Jesus Chinchilla    | jesusdavidcm@ufps.edu.co           | [JesusDavidChinchillaMachuca](https://github.com/JesusDavidChinchillaMachuca) |
+| Sebastian Lopez     | johansebastianlo@ufps.edu.co       | [SebsMusicLive](https://github.com/SebsMusicLive) |
 
 🚀 Clonar el Proyecto
-bash
-Copiar
-Editar
+
 git clone https://github.com/SebsMusicLive/Sistema_Academico.git
+
 📄 Licencia
 Este proyecto está bajo la licencia MIT.
 
 📅 Cronograma de Actividades
 🔗 Ver Cronograma en Google Sheets
->>>>>>> e85e937d8ec002645ba528107979f16822105b63
